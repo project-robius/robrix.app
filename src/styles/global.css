@@ -1,0 +1,341 @@
+@import 'tailwindcss';
+
+@import '@fontsource/anton/400.css';
+@import '@fontsource-variable/public-sans';
+@import '@fontsource-variable/jetbrains-mono';
+
+/* ==========================================================================
+   TWO WORLDS
+
+   The whole site runs on one idea: light mode is the simulation, dark mode
+   is the real world, and the theme toggle is the pill. That isn't a skin —
+   it's mechanical. In the simulation there is no phosphor green, no glow,
+   and no rain. Every component reads the same token names, so a section
+   written once renders alive in one world and flat in the other.
+   ========================================================================== */
+
+/* ---- THE REAL (default) ---- */
+:root,
+:root[data-world='real'] {
+  --w-bg: #07090a;
+  --w-raised: #0d1114;
+  --w-sunken: #030405;
+  --w-line: #1c2226;
+  --w-line-strong: #2b3439;
+  --w-text: #e8ecea;
+  --w-dim: #8a9691;
+  --w-faint: #737f79;
+  --w-accent: #ff2233;
+  --w-accent-ink: #ffffff;
+  --w-phos: #00ff41;
+  --w-phos-ink: #04160b;
+  --w-phos-soft: rgb(0 255 65 / 0.12);
+  --w-shadow: 0 24px 60px rgb(0 0 0 / 0.6);
+  --w-glow: 0 0 40px rgb(0 255 65 / 0.22);
+  --w-glow-accent: 0 0 40px rgb(255 34 51 / 0.28);
+  --w-rain: 0.5;
+  --w-grid: rgb(138 150 145 / 0.06);
+  --w-scrim: rgb(7 9 10 / 0.72);
+  color-scheme: dark;
+}
+
+/* ---- THE SIMULATION ---- */
+:root[data-world='sim'] {
+  --w-bg: #e8edf2;
+  --w-raised: #f4f7fa;
+  --w-sunken: #dae2ea;
+  --w-line: #ccd6e0;
+  --w-line-strong: #aebccb;
+  --w-text: #333f4b;
+  --w-dim: #57646f;
+  --w-faint: #5f6c78;
+  --w-accent: #3e7bc4;
+  --w-accent-ink: #ffffff;
+  /* no green in the simulation. it borrows the institutional blue instead. */
+  --w-phos: #3e7bc4;
+  --w-phos-ink: #ffffff;
+  --w-phos-soft: rgb(62 123 196 / 0.1);
+  --w-shadow: 0 10px 24px rgb(70 82 95 / 0.1);
+  /* A transparent zero-shadow rather than `none`: these tokens get composed
+     into comma-separated shadow lists, and `none` in a list is invalid CSS,
+     which silently drops the whole declaration. */
+  --w-glow: 0 0 0 rgb(0 0 0 / 0);
+  --w-glow-accent: 0 0 0 rgb(0 0 0 / 0);
+  --w-rain: 0;
+  --w-grid: rgb(70 82 95 / 0.05);
+  --w-scrim: rgb(232 237 242 / 0.78);
+  color-scheme: light;
+}
+
+/* `inline` keeps the var() reference in the utility so the world can switch
+   at runtime rather than being baked in at build time. */
+@theme inline {
+  --color-bg: var(--w-bg);
+  --color-raised: var(--w-raised);
+  --color-sunken: var(--w-sunken);
+  --color-line: var(--w-line);
+  --color-line-strong: var(--w-line-strong);
+  --color-text: var(--w-text);
+  --color-dim: var(--w-dim);
+  --color-faint: var(--w-faint);
+  --color-accent: var(--w-accent);
+  --color-accent-ink: var(--w-accent-ink);
+  --color-phos: var(--w-phos);
+  --color-phos-ink: var(--w-phos-ink);
+  --color-phos-soft: var(--w-phos-soft);
+
+  --font-display: 'Anton', 'Arial Narrow', Impact, sans-serif;
+  --font-sans: 'Public Sans Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, 'SFMono-Regular', monospace;
+}
+
+/* ==========================================================================
+   BASE
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--w-bg);
+  color: var(--w-text);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  transition:
+    background-color 0.4s ease,
+    color 0.4s ease;
+}
+
+::selection {
+  background: var(--w-phos);
+  color: var(--w-phos-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--w-phos);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+img,
+svg,
+video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ==========================================================================
+   TYPE
+   ========================================================================== */
+
+.u-display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  line-height: 0.9;
+  letter-spacing: 0.005em;
+  text-wrap: balance;
+}
+
+.u-label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.19em;
+  text-transform: uppercase;
+  color: var(--w-faint);
+}
+
+.u-lede {
+  font-size: clamp(1rem, 1.4vw, 1.1875rem);
+  line-height: 1.6;
+  font-weight: 300;
+  color: var(--w-dim);
+  max-width: 56ch;
+}
+
+.u-lede strong,
+.u-body strong {
+  color: var(--w-text);
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   LAYOUT
+   ========================================================================== */
+
+.u-shell {
+  width: 100%;
+  max-width: 78rem;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 2.75rem);
+}
+
+.u-section {
+  padding-block: clamp(4.5rem, 9vw, 8rem);
+  position: relative;
+}
+
+.u-rule {
+  border: 0;
+  border-top: 1px solid var(--w-line);
+  margin: 0;
+}
+
+/* faint technical grid — present in both worlds, louder in the real one */
+.u-grid-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(to right, var(--w-grid) 1px, transparent 1px) 0 0 / 88px 88px,
+    linear-gradient(to bottom, var(--w-grid) 1px, transparent 1px) 0 0 / 88px 88px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 20%, transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 20%, transparent 78%);
+}
+
+/* ==========================================================================
+   COMPONENTS
+   ========================================================================== */
+
+.u-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  padding: 0.8125rem 1.25rem;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition:
+    transform 0.16s ease,
+    box-shadow 0.16s ease,
+    background-color 0.16s ease,
+    border-color 0.16s ease,
+    color 0.16s ease;
+}
+
+.u-btn--primary {
+  background: var(--w-phos);
+  color: var(--w-phos-ink);
+  font-weight: 700;
+  box-shadow: var(--w-glow);
+}
+
+.u-btn--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--w-glow), 0 12px 32px rgb(0 0 0 / 0.3);
+}
+
+.u-btn--ghost {
+  border-color: var(--w-line-strong);
+  color: var(--w-text);
+  background: color-mix(in srgb, var(--w-raised) 70%, transparent);
+}
+
+.u-btn--ghost:hover {
+  border-color: var(--w-phos);
+  color: var(--w-phos);
+}
+
+.u-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--w-dim);
+  border: 1px solid var(--w-line);
+  border-radius: 3px;
+  padding: 0.3125rem 0.5rem;
+  white-space: nowrap;
+}
+
+.u-card {
+  background: var(--w-raised);
+  border: 1px solid var(--w-line);
+  border-radius: 6px;
+  padding: clamp(1.25rem, 2.4vw, 1.75rem);
+  transition:
+    border-color 0.18s ease,
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.u-card:hover {
+  border-color: var(--w-line-strong);
+  transform: translateY(-2px);
+  box-shadow: var(--w-shadow);
+}
+
+/* wide content never pushes the page sideways */
+.u-scroll-x {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+/* ==========================================================================
+   MOTION
+   ========================================================================== */
+
+@keyframes u-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.25;
+  }
+}
+
+@keyframes u-rise {
+  from {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.u-reveal {
+  animation: u-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

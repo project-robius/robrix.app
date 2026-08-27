@@ -1,0 +1,99 @@
+---
+import { Icon } from 'astro-icon/components';
+import SectionHead from '~/components/SectionHead.astro';
+import { STACK } from '~/data/site';
+---
+
+<section id="stack" class="u-section stack">
+  <div class="u-shell">
+    <SectionHead
+      eyebrow="Built with"
+      title="What it is actually made of"
+      lede="Four things, and not one of them is a browser. Robrix contributes back to Makepad heavily — a lot of what makes the client feel good landed in the toolkit first."
+    />
+
+    <ul class="stack__list">
+      {
+        STACK.map((s) => (
+          <li>
+            <a class="u-card stack__item" href={s.href} target="_blank" rel="noopener noreferrer">
+              <Icon name={s.icon} width="24" height="24" />
+              <div>
+                <p class="stack__role">{s.role}</p>
+                <h3>
+                  {s.name}
+                  <Icon name="tabler:arrow-up-right" width="15" height="15" />
+                </h3>
+                <p class="stack__body">{s.body}</p>
+              </div>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .stack {
+    border-top: 1px solid var(--w-line);
+    background: var(--w-sunken);
+  }
+
+  .stack__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  }
+
+  .stack__item {
+    display: flex;
+    gap: 1rem;
+    height: 100%;
+  }
+
+  .stack__item > :global(svg) {
+    color: var(--w-phos);
+    flex: 0 0 auto;
+    margin-top: 0.125rem;
+  }
+
+  .stack__role {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--w-faint);
+    margin: 0 0 0.375rem;
+  }
+
+  .stack__item h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    color: var(--w-text);
+    margin: 0 0 0.5rem;
+  }
+
+  .stack__item h3 :global(svg) {
+    color: var(--w-faint);
+    transition: color 0.16s ease;
+  }
+
+  .stack__item:hover h3 :global(svg) {
+    color: var(--w-phos);
+  }
+
+  .stack__body {
+    margin: 0;
+    font-size: 0.875rem;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--w-dim);
+  }
+</style>

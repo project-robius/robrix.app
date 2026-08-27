@@ -1,0 +1,216 @@
+---
+import { Icon } from 'astro-icon/components';
+import SectionHead from '~/components/SectionHead.astro';
+import { TARGETS } from '~/data/site';
+
+const ready = TARGETS.filter((t) => t.status === 'ready').length;
+---
+
+<section id="platforms" class="u-section platforms">
+  <div class="u-shell">
+    <SectionHead
+      eyebrow={`${ready} shipping, ${TARGETS.length - ready} in progress`}
+      title="No platform-specific code"
+      lede="The same Rust compiles for desktop and mobile. Not a shared core with native shells bolted on top — the same application, all the way down."
+    />
+
+    <ul class="pf-grid">
+      {
+        TARGETS.map((t) => (
+          <li class="pf-tile" data-status={t.status}>
+            <div class="pf-tile__top">
+              <span class="pf-tile__icon">
+                <Icon name={t.icon} width="20" height="20" />
+              </span>
+              <span class="pf-tile__status">
+                <span class="pf-tile__dot" />
+                {t.status === 'ready' ? 'Shipping' : 'In progress'}
+              </span>
+            </div>
+            <h3 class="pf-tile__name">{t.name}</h3>
+            <p class="pf-tile__host">
+              Built on <strong>{t.host}</strong>
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="pf-note">
+      <Icon name="tabler:info-circle" width="16" height="16" />
+      <span>
+        Robrix syncs over <strong>native sliding sync</strong>, the same mechanism Element X uses — it's what makes
+        logging in and loading your rooms list quick. Your homeserver will need to support it.
+      </span>
+    </p>
+  </div>
+</section>
+
+<style>
+  .platforms {
+    border-top: 1px solid var(--w-line);
+  }
+
+  .pf-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1px;
+    grid-template-columns: 1fr;
+    /* the gap is the rule: one hairline grid rather than six outlined boxes */
+    background: var(--w-line);
+    border: 1px solid var(--w-line);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .pf-tile {
+    position: relative;
+    background: var(--w-bg);
+    padding: 1.25rem 1.375rem 1.375rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: background-color 0.2s ease;
+  }
+
+  .pf-tile:hover {
+    background: var(--w-raised);
+  }
+
+  /* a phosphor bar wipes in along the top edge on hover */
+  .pf-tile::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 2px;
+    background: var(--w-phos);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .pf-tile:hover::before {
+    transform: scaleX(1);
+  }
+
+  .pf-tile[data-status='wip']::before {
+    background: var(--w-faint);
+  }
+
+  .pf-tile__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .pf-tile__icon {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    color: var(--w-phos);
+    background: var(--w-phos-soft);
+  }
+
+  .pf-tile[data-status='wip'] .pf-tile__icon {
+    color: var(--w-dim);
+    background: color-mix(in srgb, var(--w-dim) 10%, transparent);
+  }
+
+  .pf-tile__status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--w-phos);
+    white-space: nowrap;
+  }
+
+  .pf-tile[data-status='wip'] .pf-tile__status {
+    color: var(--w-dim);
+  }
+
+  .pf-tile__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 99px;
+    background: currentColor;
+    box-shadow: 0 0 8px currentColor;
+  }
+
+  .pf-tile[data-status='wip'] .pf-tile__dot {
+    box-shadow: none;
+    background: transparent;
+    border: 1px solid currentColor;
+  }
+
+  .pf-tile__name {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    color: var(--w-text);
+    margin: 0.375rem 0 0;
+  }
+
+  .pf-tile__host {
+    margin: 0;
+    font-size: 0.8125rem;
+    font-weight: 300;
+    color: var(--w-dim);
+  }
+
+  .pf-tile__host strong {
+    color: var(--w-text);
+    font-weight: 500;
+  }
+
+  .pf-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin: 1.75rem 0 0;
+    padding: 1rem 1.125rem;
+    border: 1px solid var(--w-line);
+    border-left: 2px solid var(--w-line-strong);
+    border-radius: 4px;
+    background: var(--w-raised);
+    font-size: 0.9375rem;
+    font-weight: 300;
+    color: var(--w-dim);
+  }
+
+  .pf-note :global(svg) {
+    color: var(--w-faint);
+    flex: 0 0 auto;
+    margin-top: 0.125rem;
+  }
+
+  .pf-note strong {
+    color: var(--w-text);
+    font-weight: 600;
+  }
+
+  @media (min-width: 34rem) {
+    .pf-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 56rem) {
+    .pf-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pf-tile::before {
+      transition: none;
+    }
+  }
+</style>

@@ -1,0 +1,68 @@
+---
+import { Icon } from 'astro-icon/components';
+import { LINKS, RELEASE } from '~/data/site';
+
+interface Props {
+  title?: string;
+  lede?: string;
+}
+const {
+  title = 'Unplug.',
+  lede = 'Robrix is free, MIT-licensed, and there is a build for whatever you are reading this on.',
+} = Astro.props;
+---
+
+<section class="u-section cta">
+  <div class="u-grid-bg" aria-hidden="true"></div>
+  <div class="u-shell cta__inner">
+    <h2 class="cta__title u-display">{title}</h2>
+    <p class="u-lede cta__lede">{lede}</p>
+    <div class="cta__actions">
+      <a class="u-btn u-btn--primary" href="/download">
+        <Icon name="tabler:download" width="16" height="16" />
+        Download {RELEASE.version}
+      </a>
+      <a class="u-btn u-btn--ghost" href={LINKS.matrixRoom} target="_blank" rel="noopener noreferrer">
+        <Icon name="tabler:message-circle" width="16" height="16" />
+        Join the Matrix room
+      </a>
+      <a class="u-btn u-btn--ghost" href={LINKS.github} target="_blank" rel="noopener noreferrer">
+        <Icon name="tabler:brand-github" width="16" height="16" />
+        Star on GitHub
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta {
+    border-top: 1px solid var(--w-line);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta__inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta__title {
+    font-size: clamp(3rem, 10vw, 7rem);
+    color: var(--w-text);
+    margin: 0 0 1.25rem;
+    text-shadow: var(--w-glow);
+  }
+
+  .cta__lede {
+    margin: 0 auto 2rem;
+    text-align: center;
+  }
+
+  .cta__actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+</style>

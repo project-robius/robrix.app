@@ -1,0 +1,240 @@
+---
+import { Icon } from 'astro-icon/components';
+import Base from '~/layouts/Base.astro';
+import SectionHead from '~/components/SectionHead.astro';
+import CTA from '~/components/CTA.astro';
+import { TALKS } from '~/data/site';
+
+const [lead, ...rest] = TALKS;
+---
+
+<Base
+  title="Talks & videos"
+  description="Conference talks, demos and interviews about Robrix, Makepad and Project Robius — from RustNL, GOSIM, Rust China Conf and Matrix Live."
+>
+  <section class="u-section talks-head">
+    <div class="u-grid-bg" aria-hidden="true"></div>
+    <div class="u-shell">
+      <SectionHead
+        eyebrow="Talks, demos & interviews"
+        title="Watch someone explain it"
+        lede="Robrix has been shown at RustNL, GOSIM Europe and China, Rust China Conf and FOSDEM, and covered on Matrix Live. Here's the archive, newest first."
+      />
+    </div>
+  </section>
+
+  <section class="u-section talks">
+    <div class="u-shell">
+      <article class="talk talk--lead">
+        <div class="talk__video">
+          <iframe
+            src={`https://www.youtube-nocookie.com/embed/${lead.youtube}`}
+            title={`${lead.event}: ${lead.title}`}
+            loading="lazy"
+            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+        </div>
+        <div class="talk__meta">
+          <p class="u-label">{lead.event} · {lead.date}</p>
+          <h2>{lead.title}</h2>
+          <p class="talk__body">{lead.body}</p>
+          <div class="talk__links">
+            <a
+              class="u-btn u-btn--ghost"
+              href={`https://www.youtube.com/watch?v=${lead.youtube}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Icon name="tabler:brand-youtube" width="16" height="16" /> YouTube
+            </a>
+            {
+              lead.bilibili && (
+                <a class="u-btn u-btn--ghost" href={lead.bilibili} target="_blank" rel="noopener noreferrer">
+                  <Icon name="tabler:brand-bilibili" width="16" height="16" /> BiliBili
+                </a>
+              )
+            }
+            {
+              lead.slides?.map((s) => (
+                <a class="u-btn u-btn--ghost" href={s.href} target="_blank" rel="noopener noreferrer">
+                  <Icon name="tabler:presentation" width="16" height="16" /> Slides · {s.label}
+                </a>
+              ))
+            }
+          </div>
+        </div>
+      </article>
+
+      <ul class="talks__grid">
+        {
+          rest.map((talk) => (
+            <li class="talk talk--card">
+              <div class="talk__video">
+                <iframe
+                  src={`https://www.youtube-nocookie.com/embed/${talk.youtube}`}
+                  title={`${talk.event}: ${talk.title}`}
+                  loading="lazy"
+                  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen
+                />
+              </div>
+              <div class="talk__meta">
+                <p class="u-label">
+                  {talk.event} · {talk.date}
+                </p>
+                <h2>{talk.title}</h2>
+                <p class="talk__body">{talk.body}</p>
+                <div class="talk__links">
+                  {talk.bilibili && (
+                    <a class="talk__link" href={talk.bilibili} target="_blank" rel="noopener noreferrer">
+                      BiliBili ↗
+                    </a>
+                  )}
+                  {talk.slides?.map((s) => (
+                    <a class="talk__link" href={s.href} target="_blank" rel="noopener noreferrer">
+                      Slides · {s.label} ↗
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+
+      <p class="talks__more">
+        Robrix was also presented at <a
+          href="https://archive.fosdem.org/2025/schedule/event/fosdem-2025-5841-robrix-a-pure-rust-multi-platform-matrix-client-and-more/"
+          target="_blank"
+          rel="noopener noreferrer">FOSDEM 2025</a
+        >. More slides and material live in the <a
+          href="https://github.com/project-robius/files"
+          target="_blank"
+          rel="noopener noreferrer">Project Robius files repository</a
+        >.
+      </p>
+    </div>
+  </section>
+
+  <CTA
+    title="Seen enough?"
+    lede="The client in those talks is downloadable right now, on every platform they demoed."
+  />
+</Base>
+
+<style>
+  .talks-head {
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .talks {
+    padding-top: 0;
+  }
+
+  .talk__video {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border: 1px solid var(--w-line);
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--w-sunken);
+  }
+
+  .talk__video iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .talk__meta h2 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--w-text);
+    margin: 0.75rem 0 0.625rem;
+    text-wrap: balance;
+  }
+
+  .talk__body {
+    font-size: 0.9375rem;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--w-dim);
+    margin: 0 0 1rem;
+  }
+
+  .talk__links {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .talk__link {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.05em;
+    color: var(--w-dim);
+    border-bottom: 1px solid var(--w-line-strong);
+    padding-bottom: 1px;
+    transition: color 0.16s ease;
+  }
+
+  .talk__link:hover {
+    color: var(--w-phos);
+  }
+
+  .talk--lead {
+    display: grid;
+    gap: 1.75rem;
+    padding-bottom: clamp(2.5rem, 5vw, 3.5rem);
+    margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+    border-bottom: 1px solid var(--w-line);
+  }
+
+  .talk--lead .talk__meta h2 {
+    font-size: clamp(1.375rem, 2.6vw, 1.875rem);
+    line-height: 1.15;
+  }
+
+  .talks__grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 2rem 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+  }
+
+  .talks__more {
+    margin: clamp(2.5rem, 5vw, 3.5rem) 0 0;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--w-line);
+    font-size: 0.9375rem;
+    font-weight: 300;
+    color: var(--w-dim);
+  }
+
+  .talks__more a {
+    color: var(--w-text);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .talks__more a:hover {
+    color: var(--w-phos);
+  }
+
+  @media (min-width: 900px) {
+    .talk--lead {
+      grid-template-columns: 1.35fr 1fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+    .talk--lead .talk__meta h2 {
+      margin-top: 0.5rem;
+    }
+  }
+</style>

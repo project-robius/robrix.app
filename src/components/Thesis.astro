@@ -1,0 +1,132 @@
+---
+/**
+ * The thesis. "There is no spoon" is the film's line; "There is no Electron" is
+ * the release note. It decodes out of glyph noise — but only in the real world.
+ * In the simulation nothing is revealed to you, so the line just sits there.
+ */
+const LINE = 'There is no Electron.';
+const DENIALS = ['No web engine', 'No JavaScript', 'No cruft'];
+---
+
+<section class="thesis" aria-labelledby="thesis-line">
+  <div class="u-grid-bg" aria-hidden="true"></div>
+  <div class="u-shell thesis__inner">
+    <p class="u-label thesis__eyebrow">The whole argument</p>
+    <h2 id="thesis-line" class="thesis__line" data-decode={LINE}>{LINE}</h2>
+    <ul class="thesis__denials">
+      {DENIALS.map((d) => <li class="u-chip">{d}</li>)}
+    </ul>
+    <p class="thesis__body">
+      Robrix renders on the GPU through Makepad and speaks Matrix through the official Rust SDK. There is no
+      browser anywhere in the stack — not wrapped, not embedded, not hidden. That is why it starts fast, stays
+      small, and scrolls a million messages without thinking about it.
+    </p>
+  </div>
+</section>
+
+<style>
+  .thesis {
+    position: relative;
+    overflow: hidden;
+    border-top: 1px solid var(--w-line);
+    background: var(--w-sunken);
+    padding-block: clamp(4.5rem, 10vw, 9rem);
+    text-align: center;
+  }
+
+  .thesis__inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  .thesis__eyebrow {
+    margin: 0 0 1.5rem;
+  }
+
+  /* Monospace, not the display face: the characters swap mid-animation and a
+     proportional face would jitter the whole line as they do. */
+  .thesis__line {
+    font-family: var(--font-mono);
+    font-weight: 800;
+    font-size: clamp(1.375rem, 5.4vw, 4rem);
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    text-transform: uppercase;
+    margin: 0 0 1.75rem;
+    color: var(--w-phos);
+    text-shadow: var(--w-glow);
+    text-wrap: balance;
+  }
+
+  .thesis__denials {
+    list-style: none;
+    margin: 0 0 2rem;
+    padding: 0;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .thesis__body {
+    max-width: 58ch;
+    margin: 0 auto;
+    font-size: clamp(0.9375rem, 1.3vw, 1.0625rem);
+    font-weight: 300;
+    line-height: 1.65;
+    color: var(--w-dim);
+  }
+</style>
+
+<script>
+  const node = document.querySelector<HTMLElement>('[data-decode]');
+
+  if (node) {
+    const target = node.dataset.decode!;
+    const NOISE = 'ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉ#%&@$*+=<>/\\|';
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let played = false;
+
+    const play = () => {
+      if (played) return;
+      played = true;
+
+      let settled = 0;
+      const timer = window.setInterval(() => {
+        let out = '';
+        for (let i = 0; i < target.length; i++) {
+          const ch = target[i];
+          if (ch === ' ') {
+            out += ' ';
+          } else if (i < settled) {
+            out += ch;
+          } else {
+            out += NOISE[(Math.random() * NOISE.length) | 0];
+          }
+        }
+        node.textContent = out;
+        settled += 0.7;
+        if (settled >= target.length) {
+          window.clearInterval(timer);
+          node.textContent = target;
+        }
+      }, 42);
+    };
+
+    /* Nothing is revealed to you inside the simulation. */
+    const eligible = () => document.documentElement.dataset.world !== 'sim' && !reduced;
+
+    if (eligible()) {
+      new IntersectionObserver(
+        ([entry], obs) => {
+          if (entry.isIntersecting && eligible()) {
+            play();
+            obs.disconnect();
+          }
+        },
+        { threshold: 0.55 }
+      ).observe(node);
+    }
+  }
+</script>

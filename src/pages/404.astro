@@ -1,0 +1,54 @@
+---
+import Base from '~/layouts/Base.astro';
+---
+
+<Base title="Page not found" description="That page isn't here.">
+  <section class="u-section nf">
+    <div class="u-grid-bg" aria-hidden="true"></div>
+    <div class="u-shell nf__inner">
+      <p class="u-label">Error 404</p>
+      <h1 class="u-display nf__title">There is no page.</h1>
+      <p class="u-lede nf__lede">
+        Whatever you were looking for isn't at this address. Try the front page, or grab a build.
+      </p>
+      <div class="nf__actions">
+        <a class="u-btn u-btn--primary" href="/">Back to the start</a>
+        <a class="u-btn u-btn--ghost" href="/download">Download Robrix</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .nf {
+    position: relative;
+    overflow: hidden;
+    min-height: 68svh;
+    display: grid;
+    align-items: center;
+  }
+
+  .nf__inner {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+  }
+
+  .nf__title {
+    font-size: clamp(2.5rem, 8vw, 5.5rem);
+    color: var(--w-text);
+    margin: 1rem 0;
+    text-shadow: var(--w-glow);
+  }
+
+  .nf__lede {
+    margin: 0 auto 2rem;
+  }
+
+  .nf__actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+</style>

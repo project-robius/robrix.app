@@ -1,0 +1,82 @@
+---
+import '~/styles/global.css';
+import Header from '~/components/Header.astro';
+import Footer from '~/components/Footer.astro';
+import { SITE } from '~/data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Landing page runs its own full-bleed hero, so it opts out of the top pad. */
+  flush?: boolean;
+}
+
+const { title, description = SITE.description, flush = false } = Astro.props;
+
+const fullTitle = title ? `${title} — ${SITE.name}` : `${SITE.name} — ${SITE.tagline}`;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? SITE.url).href;
+const ogImage = new URL('/images/og.png', Astro.site ?? SITE.url).href;
+---
+
+<!doctype html>
+<html lang="en" data-world="real">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="generator" content={Astro.generator} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    {/* Resolve the world before first paint, or the page flashes the wrong reality. */}
+    <script is:inline>
+      (function () {
+        try {
+          var saved = localStorage.getItem('robrix-world');
+          // The real world is the default. You have to choose the simulation.
+          document.documentElement.dataset.world = saved === 'sim' ? 'sim' : 'real';
+        } catch (e) {
+          document.documentElement.dataset.world = 'real';
+        }
+      })();
+    </script>
+  </head>
+
+  <body>
+    <a href="#main" class="u-btn u-btn--primary sr-skip">Skip to content</a>
+    <Header />
+    <main id="main" class={flush ? '' : 'pt-24'}>
+      <slot />
+    </main>
+    <Footer />
+
+    <style is:global>
+      .sr-skip {
+        position: fixed;
+        top: 0.75rem;
+        left: 0.75rem;
+        z-index: 200;
+        transform: translateY(-160%);
+        transition: transform 0.18s ease;
+      }
+      .sr-skip:focus-visible {
+        transform: none;
+      }
+    </style>
+  </body>
+</html>

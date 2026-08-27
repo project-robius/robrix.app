@@ -1,0 +1,48 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  lede?: string;
+  align?: 'left' | 'center';
+}
+const { eyebrow, title, lede, align = 'left' } = Astro.props;
+---
+
+<div class:list={['sec-head', align === 'center' && 'sec-head--center']}>
+  {eyebrow && <p class="u-label">{eyebrow}</p>}
+  <h2 class="sec-head__title">{title}</h2>
+  {lede && <p class="u-lede sec-head__lede">{lede}</p>}
+  <slot />
+</div>
+
+<style>
+  .sec-head {
+    margin-bottom: clamp(2.25rem, 4vw, 3.5rem);
+    max-width: 46rem;
+  }
+
+  .sec-head--center {
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .sec-head--center .sec-head__lede {
+    margin-inline: auto;
+  }
+
+  .sec-head__title {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    font-weight: 400;
+    font-size: clamp(1.875rem, 4.4vw, 3.25rem);
+    line-height: 0.95;
+    letter-spacing: 0.005em;
+    color: var(--w-text);
+    margin: 0.875rem 0 1rem;
+    text-wrap: balance;
+  }
+
+  .sec-head__lede {
+    margin: 0;
+  }
+</style>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://robrix.app/sitemap-index.xml

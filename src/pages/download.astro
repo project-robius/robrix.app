@@ -1,0 +1,474 @@
+---
+import { Icon } from 'astro-icon/components';
+import Base from '~/layouts/Base.astro';
+import SectionHead from '~/components/SectionHead.astro';
+import { PLATFORMS, DOWNLOAD_COLUMNS, RELEASE, LINKS } from '~/data/site';
+
+const byId = new Map(PLATFORMS.map((p) => [p.id, p]));
+const columns = DOWNLOAD_COLUMNS.map((ids) => ids.map((id) => byId.get(id)!).filter(Boolean));
+---
+
+<Base
+  title="Download"
+  description={`Download Robrix ${RELEASE.version} for macOS, Windows, Linux, Android and iOS. Free and MIT-licensed.`}
+>
+  <section class="u-section dl-head">
+    <div class="u-grid-bg" aria-hidden="true"></div>
+    <div class="u-shell">
+      <SectionHead eyebrow={`${RELEASE.tag} · ${RELEASE.dateLabel}`} title="Take the red pill">
+        <p class="u-lede">
+          Robrix is free and MIT-licensed. Pick your platform below — we've highlighted the one you appear to be
+          on. Everything here is a direct download from the GitHub release.
+        </p>
+        <div class="dl-head__meta">
+          <a class="u-chip" href={LINKS.latestRelease} target="_blank" rel="noopener noreferrer">
+            <Icon name="tabler:notes" width="13" height="13" /> Release notes
+          </a>
+          <a class="u-chip" href={LINKS.releases} target="_blank" rel="noopener noreferrer">
+            <Icon name="tabler:history" width="13" height="13" /> All releases
+          </a>
+          <span class="u-chip"><Icon name="tabler:license" width="13" height="13" /> MIT</span>
+        </div>
+      </SectionHead>
+    </div>
+  </section>
+
+  <section class="u-section dl-body">
+    <div class="u-shell">
+      <div class="dl-grid">
+        {
+          columns.map((column) => (
+            <div class="dl-col">
+              {column.map((p) => (
+            <article class="dl-card" data-platform={p.id} id={p.id}>
+              <header class="dl-card__head">
+                <Icon name={p.icon} width="22" height="22" />
+                <h2>{p.name}</h2>
+                <span class="dl-card__you">Your platform</span>
+              </header>
+
+              {p.note && <p class="dl-card__note">{p.note}</p>}
+
+              <ul class="dl-card__files">
+                {p.files.map((f) => (
+                  <li>
+                    <a
+                      class:list={['dl-file', f.primary && 'dl-file--primary']}
+                      href={f.href}
+                      target={f.href.startsWith('http') ? '_blank' : undefined}
+                      rel="noopener noreferrer"
+                    >
+                      <span class="dl-file__main">
+                        <span class="dl-file__label">{f.label}</span>
+                        <span class="dl-file__detail">{f.detail}</span>
+                      </span>
+                      <span class="dl-file__right">
+                        {f.size && <span class="dl-file__size">{f.size}</span>}
+                        <Icon name="tabler:download" width="16" height="16" />
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+
+              {
+                p.install && (
+                  <div class="dl-card__install">
+                    <p class="u-label">Installing</p>
+                    <ul>
+                      {p.install.map((line) => (
+                        <li>{line}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )
+              }
+                </article>
+              ))}
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="dl-extra">
+        <div class="dl-extra__col">
+          <p class="u-label">Requirements</p>
+          <p>
+            Robrix syncs over <strong>native sliding sync</strong>, the same mechanism Element X uses, so your
+            homeserver will need to support it. Android needs version 8 (API 26) or newer.
+          </p>
+        </div>
+        <div class="dl-extra__col">
+          <p class="u-label">Build from source</p>
+          <p>
+            Install Rust and cmake, then <code>cargo run --release</code>. Mobile builds go through
+            <code>cargo-makepad</code>. Full instructions live in the repository README.
+          </p>
+          <a class="u-btn u-btn--ghost" href={LINKS.github} target="_blank" rel="noopener noreferrer">
+            <Icon name="tabler:brand-github" width="16" height="16" />
+            Build instructions
+          </a>
+        </div>
+        <div class="dl-extra__col">
+          <p class="u-label">Something broken?</p>
+          <p>
+            Robrix is in alpha and the team wants the reports. File an issue, or come and say so in the Matrix
+            room.
+          </p>
+          <a class="u-btn u-btn--ghost" href={LINKS.issues} target="_blank" rel="noopener noreferrer">
+            <Icon name="tabler:bug" width="16" height="16" />
+            Report an issue
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .dl-head {
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(3rem, 6vw, 5rem) clamp(2rem, 4vw, 3rem);
+  }
+
+  .dl-head__meta {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+  }
+
+  .dl-head__meta a:hover {
+    border-color: var(--w-phos);
+    color: var(--w-phos);
+  }
+
+  .dl-body {
+    padding-top: 0;
+  }
+
+  /* Each column stacks its own cards, so a short card sits directly beneath the
+     one above it. A plain row grid would push iOS and Android down to clear the
+     bottom of Linux, which is three times their height. */
+  .dl-grid {
+    display: grid;
+    gap: 1rem;
+    align-items: start;
+    grid-template-columns: 1fr;
+  }
+
+  .dl-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    min-width: 0;
+  }
+
+  @media (min-width: 44rem) {
+    .dl-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 66rem) {
+    .dl-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* Single column: dissolve the column wrappers so every card becomes a direct
+     grid child, which lets the visitor's own platform float to the top — it
+     would otherwise be several screens down. */
+  @media (max-width: 43.999rem) {
+    .dl-col {
+      display: contents;
+    }
+
+    .dl-card[data-you='true'] {
+      order: -1;
+    }
+  }
+
+  /* Every platform carries a phosphor edge, dimmed down; the visitor's own
+     gets the full-strength one plus a wash and a ring, so it reads first. */
+  .dl-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--w-raised);
+    border: 1px solid color-mix(in srgb, var(--w-phos) 26%, var(--w-line));
+    border-radius: 6px;
+    padding: 1.375rem;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease,
+      background-color 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .dl-card:hover {
+    border-color: color-mix(in srgb, var(--w-phos) 52%, var(--w-line));
+  }
+
+  .dl-card[data-you='true'] {
+    position: relative;
+    border-color: var(--w-phos);
+    background: color-mix(in srgb, var(--w-phos) 7%, var(--w-raised));
+    box-shadow:
+      inset 0 0 0 1px color-mix(in srgb, var(--w-phos) 34%, transparent),
+      var(--w-glow),
+      0 18px 44px rgb(0 0 0 / 0.4);
+  }
+
+  /* A slow breath on the visitor's own card. The halo lives on a pseudo-element
+     so only opacity animates — animating box-shadow itself repaints every
+     frame. */
+  .dl-card[data-you='true']::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border: 1px solid var(--w-phos);
+    border-radius: 7px;
+    box-shadow:
+      0 0 8px color-mix(in srgb, var(--w-phos) 70%, transparent),
+      0 0 34px color-mix(in srgb, var(--w-phos) 42%, transparent),
+      inset 0 0 18px color-mix(in srgb, var(--w-phos) 22%, transparent);
+    pointer-events: none;
+    opacity: 0.12;
+    animation: dl-breathe 3.4s ease-in-out infinite;
+  }
+
+  @keyframes dl-breathe {
+    0%,
+    100% {
+      opacity: 0.12;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  /* Nothing breathes inside the simulation — it holds a flat ring instead. */
+  :root[data-world='sim'] .dl-card[data-you='true']::after {
+    animation: none;
+    opacity: 0.55;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dl-card[data-you='true']::after {
+      animation: none;
+      opacity: 0.7;
+    }
+  }
+
+  .dl-card[data-you='true']:hover {
+    transform: translateY(-2px);
+  }
+
+  .dl-card__head {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    margin-bottom: 0.875rem;
+  }
+
+  .dl-card__head :global(svg) {
+    color: var(--w-phos);
+    flex: 0 0 auto;
+  }
+
+  .dl-card__head h2 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--w-text);
+    margin: 0;
+    margin-right: auto;
+  }
+
+  .dl-card__you {
+    display: none;
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--w-phos-ink);
+    background: var(--w-phos);
+    border-radius: 99px;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .dl-card[data-you='true'] .dl-card__you {
+    display: inline-block;
+  }
+
+  .dl-card__note {
+    font-size: 0.8125rem;
+    font-weight: 300;
+    color: var(--w-dim);
+    margin: 0 0 1rem;
+  }
+
+  .dl-card__files {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .dl-file {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.75rem 0.875rem;
+    border: 1px solid var(--w-line);
+    border-radius: 4px;
+    background: var(--w-bg);
+    transition:
+      border-color 0.16s ease,
+      transform 0.16s ease,
+      background-color 0.16s ease;
+  }
+
+  .dl-file:hover {
+    border-color: var(--w-phos);
+    transform: translateX(2px);
+  }
+
+  .dl-file--primary {
+    border-color: var(--w-line-strong);
+    background: var(--w-phos-soft);
+  }
+
+  .dl-file__main {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+    min-width: 0;
+  }
+
+  .dl-file__label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--w-text);
+  }
+
+  .dl-file__detail {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    letter-spacing: 0.06em;
+    color: var(--w-faint);
+  }
+
+  .dl-file__right {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    flex: 0 0 auto;
+  }
+
+  .dl-file__size {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    color: var(--w-faint);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .dl-file__right :global(svg) {
+    color: var(--w-phos);
+  }
+
+  .dl-card__install {
+    margin-top: 1.125rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--w-line);
+  }
+
+  .dl-card__install ul {
+    list-style: none;
+    margin: 0.625rem 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4375rem;
+  }
+
+  .dl-card__install li {
+    font-size: 0.8125rem;
+    font-weight: 300;
+    color: var(--w-dim);
+  }
+
+  .dl-extra {
+    display: grid;
+    gap: 2rem;
+    margin-top: clamp(3rem, 6vw, 4.5rem);
+    padding-top: clamp(2.5rem, 5vw, 3.5rem);
+    border-top: 1px solid var(--w-line);
+  }
+
+  .dl-extra__col p:not(.u-label) {
+    font-size: 0.9375rem;
+    font-weight: 300;
+    color: var(--w-dim);
+    margin: 0.75rem 0 1rem;
+  }
+
+  .dl-extra__col strong {
+    color: var(--w-text);
+    font-weight: 600;
+  }
+
+  .dl-extra__col code {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--w-phos);
+    background: var(--w-phos-soft);
+    padding: 0.125rem 0.3125rem;
+    border-radius: 3px;
+  }
+
+  @media (min-width: 820px) {
+    .dl-extra {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5rem;
+    }
+  }
+</style>
+
+<script>
+  /* Highlight the card for whatever the visitor is actually on. Detection is a
+     hint, never a filter — every platform stays visible and downloadable. */
+  const hay = navigator.userAgent.toLowerCase();
+
+  const MATCHERS: [string, string[]][] = [
+    // iPadOS reports as a Mac, so touch points break the tie before macOS runs.
+    ['ios', ['iphone', 'ipad', 'ipod']],
+    ['android', ['android']],
+    ['windows', ['win']],
+    ['macos', ['mac']],
+    ['linux', ['linux', 'x11']],
+  ];
+
+  let found: string | null = null;
+
+  if (/mac/.test(hay) && navigator.maxTouchPoints > 1) {
+    found = 'ios';
+  } else {
+    for (const [id, needles] of MATCHERS) {
+      if (needles.some((n) => hay.includes(n))) {
+        found = id;
+        break;
+      }
+    }
+  }
+
+  if (found) {
+    const card = document.querySelector<HTMLElement>(`[data-platform="${found}"]`);
+    if (card) {
+      card.dataset.you = 'true';
+    }
+  }
+</script>

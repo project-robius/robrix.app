@@ -1,0 +1,118 @@
+---
+import { Icon } from 'astro-icon/components';
+import SectionHead from '~/components/SectionHead.astro';
+import { SIGNATURE } from '~/data/site';
+---
+
+<section id="dock" class="u-section dock">
+  <div class="u-grid-bg" aria-hidden="true"></div>
+  <div class="u-shell">
+    <SectionHead
+      eyebrow="The signature feature"
+      title="Every room. One window."
+      lede="Robrix brings a dockable-tab layout to Matrix. Split, stack and drag rooms and threads into whatever arrangement you want — the way your IDE and your browser already work — and Robrix puts it back exactly as you left it."
+    />
+
+    <figure class="dock__shot">
+      <div class="dock__frame">
+        <img
+          src="/images/robrix-dock.png"
+          alt="Robrix on macOS: a rooms list on the left, and on the right two stacked room panes, each with its own tab strip showing multiple open rooms."
+          width="1264"
+          height="798"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+      <figcaption>Robrix on macOS, with two room panes docked and four rooms open across them.</figcaption>
+    </figure>
+
+    <ul class="dock__points">
+      {
+        SIGNATURE.map((item) => (
+          <li class="dock__point">
+            <Icon name={item.icon} width="22" height="22" />
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .dock {
+    border-top: 1px solid var(--w-line);
+  }
+
+  .dock__shot {
+    margin: 0 0 clamp(2.5rem, 5vw, 4rem);
+  }
+
+  /* The frame carries the border and shadow, unfiltered — otherwise the invert
+     below turns the drop shadow into a white halo. */
+  .dock__frame {
+    border-radius: 8px;
+    border: 1px solid var(--w-line-strong);
+    box-shadow: var(--w-shadow);
+    overflow: hidden;
+  }
+
+  .dock__shot img {
+    width: 100%;
+  }
+
+  /* The only capture available is a light-theme build. In the real world it gets
+     lightness-inverted so it belongs; in the simulation it is already at home. */
+  :root[data-world='real'] .dock__shot img {
+    filter: invert(1) hue-rotate(180deg) saturate(0.86) contrast(0.94) brightness(1.06);
+  }
+
+  .dock__shot figcaption {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.04em;
+    color: var(--w-faint);
+    margin-top: 0.875rem;
+  }
+
+  .dock__points {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .dock__point {
+    border-top: 1px solid var(--w-line);
+    padding-top: 1.25rem;
+  }
+
+  .dock__point :global(svg) {
+    color: var(--w-phos);
+    margin-bottom: 0.875rem;
+  }
+
+  .dock__point h3 {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    color: var(--w-text);
+    margin: 0 0 0.5rem;
+  }
+
+  .dock__point p {
+    margin: 0;
+    font-size: 0.9375rem;
+    font-weight: 300;
+    color: var(--w-dim);
+  }
+
+  @media (min-width: 820px) {
+    .dock__points {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5rem;
+    }
+  }
+</style>
