@@ -224,14 +224,39 @@ export const DOWNLOAD_COLUMNS: string[][] = [
   ['linux'],
 ];
 
-/** Build targets, straight from the README support table. */
+/**
+ * Build targets, straight from the README support table. `download` points at
+ * the matching card on the download page; OpenHarmony has no build yet.
+ */
 export const TARGETS = [
-  { name: 'macOS', host: 'macOS', icon: 'tabler:brand-apple', status: 'ready' as const },
-  { name: 'Linux', host: 'Linux', icon: 'tabler:device-desktop', status: 'ready' as const },
-  { name: 'Windows', host: 'Windows', icon: 'tabler:brand-windows', status: 'ready' as const },
-  { name: 'Android', host: 'any OS', icon: 'tabler:brand-android', status: 'ready' as const },
-  { name: 'iOS & iPadOS', host: 'macOS', icon: 'tabler:device-mobile', status: 'ready' as const },
-  { name: 'OpenHarmony', host: 'any OS', icon: 'tabler:devices', status: 'wip' as const },
+  { name: 'macOS', host: 'macOS', icon: 'tabler:brand-apple', status: 'ready' as const, download: 'macos' },
+  { name: 'Linux', host: 'Linux', icon: 'tabler:device-desktop', status: 'ready' as const, download: 'linux' },
+  { name: 'Windows', host: 'Windows', icon: 'tabler:brand-windows', status: 'ready' as const, download: 'windows' },
+  { name: 'Android', host: 'any OS', icon: 'tabler:brand-android', status: 'ready' as const, download: 'android' },
+  { name: 'iOS & iPadOS', host: 'macOS', icon: 'tabler:device-mobile', status: 'ready' as const, download: 'ios' },
+  { name: 'OpenHarmony', host: 'any OS', icon: 'tabler:devices', status: 'wip' as const, download: null },
+];
+
+/**
+ * The same crate, aimed at three different targets. Commands are verbatim from
+ * the repository README — if the build instructions change, change them here.
+ */
+export const BUILDS = [
+  {
+    target: 'Desktop',
+    detail: 'macOS · Linux · Windows',
+    command: 'cargo run --release',
+  },
+  {
+    target: 'Android',
+    detail: 'API 26 and up',
+    command: 'cargo makepad android run -p robrix --release',
+  },
+  {
+    target: 'iOS & iPadOS',
+    detail: 'simulator or device',
+    command: 'cargo makepad apple ios --org=rs.robius --app=robrix run-sim -p robrix --release',
+  },
 ];
 
 /**

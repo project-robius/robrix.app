@@ -92,11 +92,14 @@ const columns = DOWNLOAD_COLUMNS.map((ids) => ids.map((id) => byId.get(id)!).fil
 
       <div class="dl-extra">
         <div class="dl-extra__col">
-          <p class="u-label">Requirements</p>
+          <p class="u-label">Will it work with my server?</p>
           <p>
-            Robrix syncs over <strong>native sliding sync</strong>, the same mechanism Element X uses, so your
-            homeserver will need to support it. Android needs version 8 (API 26) or newer.
+            Almost certainly. Robrix syncs over <strong>native sliding sync</strong>, the same mechanism Element X
+            uses — it is what makes logging in and loading your rooms list quick. Synapse has supported it by
+            default since late 2024, so matrix.org and most homeservers already work. Only very old installs and a
+            few alternative servers don't yet.
           </p>
+          <p>Android needs version 8 (API 26) or newer.</p>
         </div>
         <div class="dl-extra__col">
           <p class="u-label">Build from source</p>

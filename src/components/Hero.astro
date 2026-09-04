@@ -215,8 +215,12 @@ import { RELEASE, CONTRAST } from '~/data/site';
     left: max(clamp(1.25rem, 4vw, 3.5rem), calc((50% - var(--inner-w)) / 2));
   }
 
+  /* Sweeping the seam left hands the real half more room, so the copy re-centres
+     in what it actually has. Going right only ever takes room away, and chasing
+     that would shove the block into the edge — so past centre the anchor holds
+     still, which is what pinning the seam at 50% for that direction buys. */
   .hero__pane--real .hero__inner {
-    right: max(clamp(1.25rem, 4vw, 3.5rem), calc((50% - var(--inner-w)) / 2));
+    right: max(clamp(1.25rem, 4vw, 3.5rem), calc((100% - min(var(--seam), 50%) - var(--inner-w)) / 2));
   }
 
   .hero__tag {
@@ -565,8 +569,11 @@ import { RELEASE, CONTRAST } from '~/data/site';
     .hero__pane--sim .hero__inner {
       top: 6.5rem;
     }
+    /* The seam runs horizontally here, so moving it opens no left/right room to
+       re-centre into. Hold the resting offset. */
     .hero__pane--real .hero__inner {
       bottom: 4.5rem;
+      right: max(clamp(1.25rem, 4vw, 3.5rem), calc((50% - var(--inner-w)) / 2));
     }
     .hero__head {
       font-size: clamp(2.25rem, 9vw, 3.25rem);
@@ -724,15 +731,101 @@ import { RELEASE, CONTRAST } from '~/data/site';
       else glideTo(target);
     });
 
+    /* Both animations advance far slower than the display refreshes. Driving
+       them from a plain rAF loop meant ~85% of callbacks woke the main thread
+       only to reschedule, so instead they wait on a timer and spend a rAF on the
+       frames they actually mean to paint — and stand down entirely when the hero
+       is off screen or the tab is in the background. */
+    const paced = (stepMs: number, frame: () => void) => {
+      let raf = 0;
+      let timer = 0;
+      let onScreen = true;
+      let enabled = true;
+
+      const awake = () => enabled && onScreen && document.visibilityState === 'visible';
+
+      const run = () => {
+        raf = 0;
+        if (!awake()) return;
+        frame();
+        queue();
+      };
+
+      const queue = () => {
+        if (timer || raf || !awake()) return;
+        timer = window.setTimeout(() => {
+          timer = 0;
+          if (awake()) raf = requestAnimationFrame(run);
+        }, stepMs);
+      };
+
+      const halt = () => {
+        if (timer) {
+          clearTimeout(timer);
+          timer = 0;
+        }
+        if (raf) {
+          cancelAnimationFrame(raf);
+          raf = 0;
+        }
+      };
+
+      /* rAF stops itself in a hidden tab but setTimeout only slows down, so the
+         pacing timer has to be told to stand down as well. */
+      const sync = () => (awake() ? queue() : halt());
+      document.addEventListener('visibilitychange', sync);
+      new IntersectionObserver(
+        ([entry]) => {
+          onScreen = entry.isIntersecting;
+          sync();
+        },
+        { threshold: 0.02 }
+      ).observe(hero);
+
+      queue();
+      return {
+        stop: () => {
+          enabled = false;
+          halt();
+        },
+      };
+    };
+
     /* A slow sway before first interaction, so the control announces itself. */
     if (!reduced) {
-      const t0 = performance.now();
-      const sway = (now: number) => {
-        if (hero.dataset.touched === 'true') return;
-        setSeam(50 + Math.sin((now - t0) / 2600) * 11);
-        requestAnimationFrame(sway);
-      };
-      requestAnimationFrame(sway);
+      const PERIOD = 2600;
+      /* The hint has landed by ~20s; swaying past that is just burning frames at
+         someone who has decided not to drag. Stop on the next zero crossing after
+         that instead of a flat timeout, so the seam settles back to centre rather
+         than freezing mid-swing. */
+      const RETIRE = Math.ceil(20000 / (Math.PI * PERIOD)) * Math.PI * PERIOD;
+      /* Clocked on time the hero was actually on screen, not wall time: a scroll
+         away shouldn't spend the hint on someone who cannot see it, and the sine
+         picks up where it left off instead of jumping on the way back. */
+      let shown = 0;
+      let last = performance.now();
+      /* 30fps is ample for a 2.6s sine, and every step writes a custom property
+         that re-clips a full-screen pane — that repaint, not the callback, is
+         the expensive half. */
+      let lastSeam = -1;
+      const swaying = paced(1000 / 30, () => {
+        const now = performance.now();
+        shown += Math.min(now - last, 100);
+        last = now;
+        if (hero.dataset.touched === 'true') {
+          swaying.stop();
+          return;
+        }
+        if (shown >= RETIRE) {
+          setSeam(50);
+          swaying.stop();
+          return;
+        }
+        const v = Math.round((50 + Math.sin(shown / PERIOD) * 11) * 100) / 100;
+        if (v === lastSeam) return;
+        lastSeam = v;
+        setSeam(v);
+      });
     }
 
     /* ---- rain, on the real side only ---- */
@@ -740,11 +833,65 @@ import { RELEASE, CONTRAST } from '~/data/site';
     const ctx = canvas.getContext('2d', { alpha: false });
 
     if (ctx && !reduced) {
-      const STEP = 18;
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      /* The rain is soft, out of focus and sits behind a scrim, so a full retina
+         backing store buys nothing visible and costs 44% more pixels to fill. */
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      const fontSpec = (px: number) => `${px}px 'JetBrains Mono Variable', monospace`;
+      const glyph = () => (Math.random() * GLYPHS.length) | 0;
+
+      /* Three depth layers. Smaller glyphs read as further off: packed tighter,
+         falling slower, dimmer. The big near layer is what the eye catches. */
+      type Layer = {
+        font: number;
+        pitch: number;
+        speed: number;
+        respawn: number;
+        head: string;
+        body: string;
+        faint: string;
+        drops: number[];
+      };
+
+      const LAYERS: Layer[] = [
+        {
+          font: 12,
+          pitch: 66,
+          speed: 7,
+          respawn: 0.93,
+          head: 'rgba(190,255,212,0.8)',
+          body: 'rgba(30,255,95,0.5)',
+          faint: 'rgba(0,255,65,0.28)',
+          drops: [],
+        },
+        {
+          font: 18,
+          pitch: 96,
+          speed: 11,
+          respawn: 0.93,
+          head: 'rgba(198,255,216,1)',
+          body: 'rgba(50,255,112,0.78)',
+          faint: 'rgba(0,255,65,0.44)',
+          drops: [],
+        },
+        {
+          font: 28,
+          pitch: 170,
+          speed: 16,
+          respawn: 0.95,
+          head: 'rgba(214,255,229,1)',
+          body: 'rgba(72,255,128,0.9)',
+          faint: 'rgba(0,255,65,0.55)',
+          drops: [],
+        },
+      ];
+
+      /* Columns that never fall. They sit still and re-roll a character now and
+         then, so the gaps between the streams keep moving. */
+      type Strip = { x: number; font: number; top: number; cells: number[] };
+      let strips: Strip[] = [];
+
       let w = 0;
       let h = 0;
-      let drops: number[] = [];
 
       const resize = () => {
         const r = canvas.getBoundingClientRect();
@@ -756,33 +903,44 @@ import { RELEASE, CONTRAST } from '~/data/site';
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         ctx.fillStyle = '#07090a';
         ctx.fillRect(0, 0, w, h);
-        drops = Array.from({ length: Math.ceil(w / STEP) }, () => Math.random() * -h);
-      };
 
-      let last = 0;
-      const draw = (now: number) => {
-        if (now - last >= 60) {
-          last = now;
-          ctx.fillStyle = 'rgba(7,9,10,0.11)';
-          ctx.fillRect(0, 0, w, h);
-          ctx.font = `${STEP}px 'JetBrains Mono Variable', monospace`;
-          ctx.textBaseline = 'top';
-          for (let i = 0; i < drops.length; i++) {
-            const x = i * STEP;
-            ctx.fillStyle = 'rgba(185,255,203,0.85)';
-            ctx.fillText(GLYPHS[(Math.random() * GLYPHS.length) | 0], x, drops[i]);
-            ctx.fillStyle = 'rgba(0,255,65,0.5)';
-            ctx.fillText(GLYPHS[(Math.random() * GLYPHS.length) | 0], x, drops[i] - STEP);
-            drops[i] += 11;
-            if (drops[i] > h && Math.random() > 0.975) drops[i] = -STEP * 2;
-          }
+        /* Seed across [-h, h] so roughly half of every layer is already falling
+           on screen at first paint instead of raining in from nothing. */
+        for (const l of LAYERS) {
+          l.drops = Array.from(
+            { length: Math.ceil(w / l.pitch) + 1 },
+            () => Math.random() * 2 * h - h
+          );
         }
-        raf = requestAnimationFrame(draw);
-      };
 
-      let raf = 0;
-      resize();
-      raf = requestAnimationFrame(draw);
+        /* One strip per vertical slice of the canvas, and a shuffled band index
+           to spread them down the height too. Purely random placement clumps —
+           this covers the canvas without falling into a visible pattern. */
+        const count = Math.max(8, Math.round(w / 62));
+        const slot = w / count;
+        const BANDS = 3;
+        const bands = Array.from({ length: count }, (_, i) => i % BANDS);
+        for (let i = bands.length - 1; i > 0; i--) {
+          const j = (Math.random() * (i + 1)) | 0;
+          const t = bands[i];
+          bands[i] = bands[j];
+          bands[j] = t;
+        }
+
+        strips = Array.from({ length: count }, (_, i) => {
+          const font = LAYERS[(Math.random() * LAYERS.length) | 0].font;
+          const rows = 4 + ((Math.random() * 9) | 0);
+          const bandH = Math.max(1, (h - rows * font) / BANDS);
+          return {
+            x: i * slot + Math.random() * Math.max(1, slot - font),
+            font,
+            top: bands[i] * bandH + Math.random() * bandH,
+            cells: Array.from({ length: rows }, glyph),
+          };
+        });
+        /* grouped by size so the draw loop only switches ctx.font a few times */
+        strips.sort((a, b) => a.font - b.font);
+      };
 
       let rt: number;
       window.addEventListener('resize', () => {
@@ -790,18 +948,51 @@ import { RELEASE, CONTRAST } from '~/data/site';
         rt = window.setTimeout(resize, 160);
       });
 
-      /* stop burning frames once the hero is scrolled past */
-      new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            if (!raf) raf = requestAnimationFrame(draw);
-          } else {
-            cancelAnimationFrame(raf);
-            raf = 0;
+      resize();
+      paced(60, () => {
+        ctx.fillStyle = 'rgba(7,9,10,0.11)';
+        ctx.fillRect(0, 0, w, h);
+        ctx.textBaseline = 'top';
+
+        for (const l of LAYERS) {
+          ctx.font = fontSpec(l.font);
+          const drops = l.drops;
+          for (let i = 0; i < drops.length; i++) {
+            const x = i * l.pitch;
+            ctx.fillStyle = l.head;
+            ctx.fillText(GLYPHS[glyph()], x, drops[i]);
+            ctx.fillStyle = l.body;
+            ctx.fillText(GLYPHS[glyph()], x, drops[i] - l.font);
+            ctx.fillStyle = l.faint;
+            ctx.fillText(GLYPHS[glyph()], x, drops[i] - l.font * 2);
+            drops[i] += l.speed;
+            /* Respawn chance per frame once a column runs off the bottom.
+               This governs how many streams are falling at any moment. */
+            if (drops[i] > h && Math.random() > l.respawn) drops[i] = -l.font * 2;
           }
-        },
-        { threshold: 0.02 }
-      ).observe(hero);
+        }
+
+        let stripFont = 0;
+        for (const s of strips) {
+          if (s.font !== stripFont) {
+            stripFont = s.font;
+            ctx.font = fontSpec(stripFont);
+          }
+          for (let r = 0; r < s.cells.length; r++) {
+            /* A cell that just turned over flares, then decays with the canvas
+               fade. That flicker is the whole point of these. */
+            const turned = Math.random() < 0.07;
+            if (turned) s.cells[r] = glyph();
+            ctx.fillStyle = turned ? 'rgba(196,255,214,0.5)' : 'rgba(0,255,65,0.075)';
+            ctx.fillText(GLYPHS[s.cells[r]], s.x, s.top + r * s.font);
+          }
+          /* and once in a while the whole strip slips a row, like a bad frame */
+          if (Math.random() < 0.005) {
+            const slipped = s.top + (Math.random() < 0.5 ? -s.font : s.font);
+            if (slipped > 0 && slipped + s.cells.length * s.font < h) s.top = slipped;
+          }
+        }
+      });
     }
   }
 </script>
