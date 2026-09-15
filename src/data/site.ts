@@ -1,6 +1,6 @@
 /**
  * Every fact on this site comes from the Robrix repository, its README, or the
- * v1.0.0-alpha.2 release. Keep it that way — no invented benchmarks, no fake
+ * v1.0.0-beta.1 release. Keep it that way — no invented benchmarks, no fake
  * testimonials. When a new release ships, RELEASE is the only thing to bump.
  */
 
@@ -16,7 +16,7 @@ export const SITE = {
 export const LINKS = {
   github: 'https://github.com/project-robius/robrix',
   releases: 'https://github.com/project-robius/robrix/releases',
-  latestRelease: 'https://github.com/project-robius/robrix/releases/tag/v1.0.0-alpha.2',
+  latestRelease: 'https://github.com/project-robius/robrix/releases/tag/v1.0.0-beta.1',
   issues: 'https://github.com/project-robius/robrix/issues',
   license: 'https://github.com/project-robius/robrix/blob/main/LICENSE-MIT',
   matrixRoom: 'https://matrix.to/#/#robius-robrix:matrix.org',
@@ -30,20 +30,24 @@ export const LINKS = {
 } as const;
 
 export const REPO = {
-  stars: 481,
-  forks: 65,
+  stars: 487,
+  forks: 67,
   license: 'MIT',
 } as const;
 
 export const RELEASE = {
-  version: '1.0.0-alpha.2',
-  tag: 'v1.0.0-alpha.2',
-  date: '2026-08-13',
-  dateLabel: 'August 2026',
-  base: 'https://github.com/project-robius/robrix/releases/download/v1.0.0-alpha.2',
+  version: '1.0.0-beta.1',
+  tag: 'v1.0.0-beta.1',
+  date: '2026-09-08',
+  dateLabel: 'September 2026',
+  base: 'https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.1',
 } as const;
 
 const dl = (file: string) => `${RELEASE.base}/${file}`;
+
+/* The Arch package drops the hyphen out of the version: 1.0.0-beta.1 becomes
+   1.0.0beta.1. Derived rather than written out so RELEASE stays the only bump. */
+const archVersion = RELEASE.version.replace('-', '');
 
 export type DownloadFile = {
   label: string;
@@ -80,7 +84,7 @@ export const PLATFORMS: Platform[] = [
         detail: 'M1 and later',
         file: `Robrix_${RELEASE.version}_aarch64.dmg`,
         href: dl(`Robrix_${RELEASE.version}_aarch64.dmg`),
-        size: '68.5 MB',
+        size: '69.5 MB',
         primary: true,
       },
       {
@@ -88,7 +92,7 @@ export const PLATFORMS: Platform[] = [
         detail: 'x86_64',
         file: `Robrix_${RELEASE.version}_x64.dmg`,
         href: dl(`Robrix_${RELEASE.version}_x64.dmg`),
-        size: '71.4 MB',
+        size: '72.5 MB',
       },
     ],
   },
@@ -104,9 +108,9 @@ export const PLATFORMS: Platform[] = [
       {
         label: 'Installer',
         detail: 'x86_64',
-        file: `robrix-${RELEASE.version}-windows-x86_64-release.exe`,
-        href: dl(`robrix-${RELEASE.version}-windows-x86_64-release.exe`),
-        size: '52.8 MB',
+        file: `robrix-${RELEASE.version}-windows-x86_64.exe`,
+        href: dl(`robrix-${RELEASE.version}-windows-x86_64.exe`),
+        size: '53.4 MB',
         primary: true,
       },
     ],
@@ -127,52 +131,59 @@ export const PLATFORMS: Platform[] = [
       {
         label: 'Ubuntu 24.04+',
         detail: 'x86_64 · .deb',
-        file: `robrix-${RELEASE.version}-ubuntu-24.04-x86_64-release.deb`,
-        href: dl(`robrix-${RELEASE.version}-ubuntu-24.04-x86_64-release.deb`),
-        size: '68.8 MB',
+        file: `robrix-${RELEASE.version}-ubuntu-24.04-x86_64.deb`,
+        href: dl(`robrix-${RELEASE.version}-ubuntu-24.04-x86_64.deb`),
+        size: '71.0 MB',
         primary: true,
       },
       {
         label: 'Ubuntu 24.04+',
         detail: 'aarch64 · .deb',
-        file: `robrix-${RELEASE.version}-ubuntu-24.04-arm-aarch64-release.deb`,
-        href: dl(`robrix-${RELEASE.version}-ubuntu-24.04-arm-aarch64-release.deb`),
-        size: '66.6 MB',
+        file: `robrix-${RELEASE.version}-ubuntu-24.04-arm-aarch64.deb`,
+        href: dl(`robrix-${RELEASE.version}-ubuntu-24.04-arm-aarch64.deb`),
+        size: '68.5 MB',
       },
       {
         label: 'Ubuntu 22.04',
         detail: 'x86_64 · .deb',
-        file: `robrix-${RELEASE.version}-ubuntu-22.04-x86_64-release.deb`,
-        href: dl(`robrix-${RELEASE.version}-ubuntu-22.04-x86_64-release.deb`),
-        size: '68.8 MB',
+        file: `robrix-${RELEASE.version}-ubuntu-22.04-x86_64.deb`,
+        href: dl(`robrix-${RELEASE.version}-ubuntu-22.04-x86_64.deb`),
+        size: '71.0 MB',
       },
       {
         label: 'Ubuntu 22.04',
         detail: 'aarch64 · .deb',
-        file: `robrix-${RELEASE.version}-ubuntu-22.04-arm-aarch64-release.deb`,
-        href: dl(`robrix-${RELEASE.version}-ubuntu-22.04-arm-aarch64-release.deb`),
-        size: '66.5 MB',
+        file: `robrix-${RELEASE.version}-ubuntu-22.04-arm-aarch64.deb`,
+        href: dl(`robrix-${RELEASE.version}-ubuntu-22.04-arm-aarch64.deb`),
+        size: '68.5 MB',
       },
       {
         label: 'Arch Linux',
         detail: 'x86_64 · pkg.tar.zst',
-        file: `robrix-1.0.0alpha.2-1-x86_64.pkg.tar.zst`,
-        href: dl(`robrix-1.0.0alpha.2-1-x86_64.pkg.tar.zst`),
-        size: '64.8 MB',
+        file: `robrix-${archVersion}-1-x86_64.pkg.tar.zst`,
+        href: dl(`robrix-${archVersion}-1-x86_64.pkg.tar.zst`),
+        size: '66.8 MB',
+      },
+      {
+        label: 'Arch Linux',
+        detail: 'aarch64 · pkg.tar.zst',
+        file: `robrix-${archVersion}-1-aarch64.pkg.tar.zst`,
+        href: dl(`robrix-${archVersion}-1-aarch64.pkg.tar.zst`),
+        size: '65.1 MB',
       },
       {
         label: 'AppImage',
         detail: 'x86_64 · any distro',
         file: `robrix-${RELEASE.version}-x86_64.AppImage`,
         href: dl(`robrix-${RELEASE.version}-x86_64.AppImage`),
-        size: '69.1 MB',
+        size: '71.0 MB',
       },
       {
         label: 'AppImage',
         detail: 'aarch64 · any distro',
         file: `robrix-${RELEASE.version}-aarch64.AppImage`,
         href: dl(`robrix-${RELEASE.version}-aarch64.AppImage`),
-        size: '66.9 MB',
+        size: '68.7 MB',
       },
     ],
   },
@@ -182,7 +193,7 @@ export const PLATFORMS: Platform[] = [
     icon: 'tabler:device-mobile',
     detect: ['iphone', 'ipad', 'ipod'],
     status: 'stable',
-    note: 'Distributed through TestFlight while Robrix is in alpha.',
+    note: 'Distributed through TestFlight while Robrix is in beta.',
     files: [
       {
         label: 'TestFlight beta',
@@ -198,15 +209,15 @@ export const PLATFORMS: Platform[] = [
     icon: 'tabler:brand-android',
     detect: ['android'],
     status: 'stable',
-    note: 'Android 8 (API 26) and up. Google Play listing is in progress.',
+    note: 'The package ID is now rs.robius.robrix, so this installs alongside a 1.0.0-alpha.2 build rather than over it — uninstall the old one once you are happy.',
     install: ['Sideload the APK — you will need to allow installing from unknown sources.'],
     files: [
       {
         label: 'APK',
         detail: 'aarch64',
-        file: `Robrix-${RELEASE.version}-android-aarch64-release.apk`,
-        href: dl(`Robrix-${RELEASE.version}-android-aarch64-release.apk`),
-        size: '66.9 MB',
+        file: `Robrix-${RELEASE.version}-android-aarch64.apk`,
+        href: dl(`Robrix-${RELEASE.version}-android-aarch64.apk`),
+        size: '61.2 MB',
         primary: true,
       },
     ],
@@ -214,7 +225,7 @@ export const PLATFORMS: Platform[] = [
 ];
 
 /**
- * How the download cards pack on wide screens. Linux carries seven builds and
+ * How the download cards pack on wide screens. Linux carries eight builds and
  * everything else carries one or two, so it gets a column to itself and the
  * short cards pair up beside it. Ids refer to PLATFORMS above.
  */
@@ -348,14 +359,24 @@ export const FEATURES: Feature[] = [
     icon: 'tabler:shield-lock',
   },
   {
+    title: 'Every message, tracked',
+    body: 'Each message shows where it actually is: uploading, sent, queued because you are offline, or failed. Retry or cancel anything that did not make it, attachments included.',
+    icon: 'tabler:checks',
+  },
+  {
     title: 'Threads and replies',
     body: 'Threaded replies, replies into a new thread, and reply previews that expand, collapse and render full rich text.',
     icon: 'tabler:message-2-share',
   },
   {
     title: 'Mentions that keep up',
-    body: 'Autocomplete for users, rooms and @room stays fast even in huge rooms, with a proper pop-up. Slash commands share the same UI.',
+    body: 'Autocomplete for users, rooms and @room stays fast even in huge rooms, with a proper pop-up that keeps up as you type.',
     icon: 'tabler:at',
+  },
+  {
+    title: 'Slash commands',
+    body: '/me, /notice, /spoiler, /shrug, /rainbow, /invite, /dm, /whois, /ignore, /nick and /leave, sharing the autocomplete pop-up that mentions use.',
+    icon: 'tabler:terminal-2',
   },
   {
     title: 'Files and media',
@@ -364,8 +385,13 @@ export const FEATURES: Feature[] = [
   },
   {
     title: 'Works offline',
-    body: 'A persistent event cache means your history is there before the network is. Everything reconciles when you reconnect.',
+    body: 'A persistent event cache means your history is there before the network is. Write while you are disconnected and the send queue posts it for you when you come back.',
     icon: 'tabler:cloud-off',
+  },
+  {
+    title: 'Read receipts you control',
+    body: 'Send them publicly or privately, mark a room read on scroll or by hand, or hide receipts altogether. Unread badges stay in sync across every category in the rooms list.',
+    icon: 'tabler:eye-check',
   },
   {
     title: 'Spaces, DMs and invites',
@@ -389,14 +415,22 @@ export const FEATURES: Feature[] = [
   },
 ];
 
-export const ROADMAP = [
-  'Audio, video and GIF message events',
-  'Search messages within a room',
-  'Room browser and public room search',
-  'Room settings and info screen',
-  'Room members pane',
-  'Moderation: ban, kick and friends',
-  'Collapsible runs of small events',
+export type RoadmapItem = { label: string; issue?: number };
+
+/**
+ * The unchecked rows of the README's feature status tracker, kept in its order:
+ * that list says it is sorted by priority, so the order carries information and
+ * must not be rearranged for looks. `issue` is the filed issue where one exists
+ * — the rest are planned but untracked, and the absence is worth showing.
+ */
+export const ROADMAP: RoadmapItem[] = [
+  { label: 'Collapsible runs of small events', issue: 118 },
+  { label: 'Audio, video and GIF message events', issue: 120 },
+  { label: 'Search messages within a room', issue: 122 },
+  { label: 'Room browser and public room search' },
+  { label: 'Room settings and info screen' },
+  { label: 'Room members pane' },
+  { label: 'Moderation: ban, kick and friends' },
 ];
 
 export const STACK = [
