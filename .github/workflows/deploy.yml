@@ -1,0 +1,35 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      # Staged on robrix.ai until the switch. Delete this line to build for
+      # robrix.app: canonical URLs, the sitemap and robots.txt all follow it.
+      SITE_URL: https://robrix.ai
+    steps:
+      - uses: actions/checkout@v7
+      - uses: withastro/action@v6
+        with:
+          node-version: 22
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: github-pages
+    steps:
+      - uses: actions/deploy-pages@v5

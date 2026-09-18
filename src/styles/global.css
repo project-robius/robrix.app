@@ -119,6 +119,47 @@ body {
     color 0.4s ease;
 }
 
+/* The real world needs a little depth between its dark sections. This lives
+   behind the page chrome rather than inside a specific component, so the thin
+   signal and scanline texture can quietly connect the whole narrative. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 1;
+  background:
+    radial-gradient(ellipse 48% 38% at 92% 12%, rgb(0 255 65 / 0.1), transparent 70%),
+    radial-gradient(ellipse 30% 24% at 7% 76%, rgb(255 34 51 / 0.06), transparent 72%),
+    repeating-linear-gradient(0deg, rgb(202 255 218 / 0.025) 0 1px, transparent 1px 5px);
+  background-size: 100% 100%, 100% 100%, 100% 100%;
+  animation: u-atmosphere-drift 22s ease-in-out infinite alternate;
+  transition: opacity 0.4s ease;
+}
+
+/* Every direct child remains above the fixed atmosphere. Keeping this at the
+   global level lets transparent sections pick up the field without changing
+   their own stacking or pointer behavior. */
+body > * {
+  position: relative;
+  z-index: 1;
+}
+
+:root[data-world='sim'] body::before {
+  opacity: 0;
+}
+
+/* The mark joins the phosphor system in the real world; the simulation keeps
+   its original product colour so the two realities remain legible at a glance. */
+.brand__mark {
+  transition: filter 0.35s ease;
+}
+
+:root[data-world='real'] .brand__mark {
+  filter: brightness(0) saturate(100%) invert(79%) sepia(98%) saturate(902%) hue-rotate(82deg) brightness(108%) contrast(106%);
+}
+
 ::selection {
   background: var(--w-phos);
   color: var(--w-phos-ink);
@@ -320,6 +361,15 @@ a {
   to {
     opacity: 1;
     transform: none;
+  }
+}
+
+@keyframes u-atmosphere-drift {
+  from {
+    background-position: 0 0, 0 0, 0 0;
+  }
+  to {
+    background-position: 0 -1.25rem, 0 1.5rem, 0 0.5rem;
   }
 }
 

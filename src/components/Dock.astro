@@ -46,16 +46,23 @@ import { SIGNATURE } from '~/data/site';
     border-top: 1px solid var(--w-line);
   }
 
+  /* held a little inside the shell and centred, so the window reads as an object
+     sitting in the section rather than a band running edge to edge */
   .dock__shot {
-    margin: 0 0 clamp(2.5rem, 5vw, 4rem);
+    max-width: 64rem;
+    margin: 0 auto clamp(2.5rem, 5vw, 4rem);
   }
 
   /* The frame carries the border and shadow, unfiltered — otherwise the invert
-     below turns the drop shadow into a white halo. */
+     below turns the drop shadow into a white halo. The two phosphor layers are
+     the glow: a tight rim on the border and a wide, fainter spill behind it. */
   .dock__frame {
     border-radius: 8px;
-    border: 1px solid var(--w-line-strong);
-    box-shadow: var(--w-shadow);
+    border: 1px solid color-mix(in srgb, var(--w-phos) 28%, var(--w-line-strong));
+    box-shadow:
+      var(--w-shadow),
+      0 0 16px color-mix(in srgb, var(--w-phos) 18%, transparent),
+      0 0 72px color-mix(in srgb, var(--w-phos) 10%, transparent);
     overflow: hidden;
   }
 

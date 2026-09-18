@@ -1,0 +1,147 @@
+---
+import Base from '~/layouts/Base.astro';
+
+interface Props {
+  frontmatter: { title: string; description?: string };
+}
+
+const { frontmatter } = Astro.props;
+---
+
+<Base title={frontmatter.title} description={frontmatter.description}>
+  <section class="u-section prose-head">
+    <div class="u-grid-bg" aria-hidden="true"></div>
+    <div class="u-shell">
+      <h1 class="u-display prose-title">{frontmatter.title}</h1>
+    </div>
+  </section>
+
+  <section class="prose-body">
+    <div class="u-shell">
+      <article class="prose">
+        <slot />
+      </article>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .prose-head {
+    padding-bottom: clamp(2rem, 4vw, 3rem);
+  }
+
+  .prose-title {
+    position: relative;
+    margin: 0;
+    font-size: clamp(2.5rem, 7vw, 5rem);
+    color: var(--w-text);
+  }
+
+  .prose-body {
+    padding-bottom: clamp(4.5rem, 9vw, 8rem);
+  }
+
+  /* A long document people actually have to read: a reading measure, body text
+     at close to full strength instead of the dim marketing copy used elsewhere,
+     and links that look like links. Markdown arrives through the slot without
+     this component's scope attribute, hence the :global() selectors. */
+  .prose {
+    max-width: 68ch;
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    color: color-mix(in srgb, var(--w-text) 88%, var(--w-bg));
+  }
+
+  .prose :global(p) {
+    margin: 0 0 1.25rem;
+  }
+
+  /* policies open on their "Last updated" line, so it is set as a date stamp */
+  .prose > :global(p:first-child) {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    letter-spacing: 0.02em;
+    color: var(--w-faint);
+  }
+
+  .prose > :global(p:first-child em) {
+    font-style: normal;
+  }
+
+  .prose :global(h2) {
+    font-family: var(--font-display);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    line-height: 1.05;
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    color: var(--w-text);
+    margin: 3.5rem 0 1.125rem;
+    padding-top: 2.25rem;
+    border-top: 1px solid var(--w-line);
+    scroll-margin-top: 6rem;
+    text-wrap: balance;
+  }
+
+  .prose :global(h3) {
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--w-text);
+    margin: 2.25rem 0 0.75rem;
+    scroll-margin-top: 6rem;
+  }
+
+  .prose :global(a) {
+    color: var(--w-text);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--w-phos) 60%, transparent);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    transition:
+      color 0.16s ease,
+      text-decoration-color 0.16s ease;
+  }
+
+  .prose :global(a:hover) {
+    color: var(--w-phos);
+    text-decoration-color: var(--w-phos);
+  }
+
+  .prose :global(strong) {
+    color: var(--w-text);
+    font-weight: 600;
+  }
+
+  /* Tailwind's preflight strips list markers; a policy's lists need them back */
+  .prose :global(ul) {
+    list-style: disc outside;
+    margin: 0 0 1.5rem;
+    padding-left: 1.25rem;
+  }
+
+  .prose :global(li) {
+    margin-bottom: 0.625rem;
+    padding-left: 0.25rem;
+  }
+
+  .prose :global(li::marker) {
+    color: var(--w-phos);
+  }
+
+  .prose :global(code) {
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+    padding: 0.125rem 0.375rem;
+    border-radius: 4px;
+    background: var(--w-raised);
+    border: 1px solid var(--w-line);
+    color: var(--w-text);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .prose :global(a) {
+      transition: none;
+    }
+  }
+</style>
