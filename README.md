@@ -61,7 +61,8 @@ node scripts/make-og.mjs
 
 Renders `public/images/og.png` from SVG via sharp. It substitutes Impact and
 Menlo for Anton and JetBrains Mono, so run it on a machine that has them
-(any macOS).
+(any macOS). The cube is sampled from `public/images/robrix-logo.png` and the
+rain is seeded, so the output only changes when the script or the logo does.
 
 ## Known gaps
 
