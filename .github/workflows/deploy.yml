@@ -17,10 +17,10 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      # Staged on robrix.ai until the switch. Delete this line to build for
-      # robrix.app: canonical URLs, the sitemap and robots.txt all follow it.
-      SITE_URL: https://robrix.ai
+    # Builds for robrix.app, which is where Pages serves this. To stage on another
+    # host instead, add `env: { SITE_URL: https://<host> }` here: canonical URLs,
+    # og:image, the sitemap and robots.txt all follow it, and any host other than
+    # robrix.app is built noindex — so the host named must be the one serving it.
     steps:
       - uses: actions/checkout@v7
       - uses: withastro/action@v6

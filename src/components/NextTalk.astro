@@ -1,0 +1,212 @@
+---
+import { Icon } from 'astro-icon/components';
+import { NEXT_TALK } from '~/data/site';
+---
+
+<section class="next-talk" aria-labelledby="next-talk-title">
+  <div class="u-shell">
+    <div class="next-talk__strip">
+      <time class="next-talk__date" datetime={NEXT_TALK.starts}>
+        <span class="next-talk__month">{NEXT_TALK.month}</span>
+        <span class="next-talk__days">{NEXT_TALK.days}</span>
+        <span class="next-talk__year">{NEXT_TALK.year}</span>
+      </time>
+
+      <div class="next-talk__main">
+        <p class="u-label">
+          <span class="next-talk__live">See it live</span>{' '}
+          <span class="next-talk__sep" aria-hidden="true">·</span>{' '}
+          Upcoming talk
+        </p>
+        <h2 id="next-talk-title" class="next-talk__title">Robrix at {NEXT_TALK.event}</h2>
+        <p class="next-talk__body">{NEXT_TALK.body}</p>
+        <p class="next-talk__where">
+          <Icon name="tabler:map-pin" width="15" height="15" />
+          {NEXT_TALK.city}
+        </p>
+      </div>
+
+      <div class="next-talk__actions">
+        <a class="u-btn u-btn--ghost" href={NEXT_TALK.href} target="_blank" rel="noopener noreferrer">
+          <Icon name="tabler:external-link" width="16" height="16" />
+          Conference site
+        </a>
+        <a class="next-talk__past" href="/presentations">Watch earlier talks</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{/* A static page cannot know the conference is over, so the visitor's clock does. */}
+<script is:inline define:vars={{ ends: NEXT_TALK.ends }}>
+  if (Date.now() >= Date.parse(ends)) document.currentScript.previousElementSibling.hidden = true;
+</script>
+
+<style>
+  /* A band, not a section: it is news, so it sits between the hero and the first
+     argument without taking a full section's breath away from either. */
+  .next-talk {
+    position: relative;
+    padding-block: clamp(1.75rem, 4vw, 2.75rem);
+    border-top: 1px solid var(--w-line);
+    background: var(--w-sunken);
+  }
+
+  .next-talk[hidden] {
+    display: none;
+  }
+
+  /* Built the way the features dock is: panes on a line-coloured bed, so the 1px
+     gap draws every seam and the strip reads as one docked row. The glow is the
+     dock screenshot's: a tight rim on the border and a wide, fainter spill. */
+  .next-talk__strip {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1px;
+    background: var(--w-line);
+    border: 1px solid color-mix(in srgb, var(--w-phos) 28%, var(--w-line-strong));
+    border-radius: 8px;
+    box-shadow:
+      0 0 16px color-mix(in srgb, var(--w-phos) 18%, transparent),
+      0 0 72px color-mix(in srgb, var(--w-phos) 10%, transparent);
+    overflow: hidden;
+  }
+
+  .next-talk__date,
+  .next-talk__main,
+  .next-talk__actions {
+    background: var(--w-raised);
+    padding: clamp(1.125rem, 2.4vw, 1.75rem);
+  }
+
+  /* The date is the one fact a visitor has to leave with, so it gets the display
+     face and its own lit pane. Stacked it is a calendar leaf; on a phone it lies
+     down into a single line to save the height. */
+  .next-talk__date {
+    display: flex;
+    align-items: baseline;
+    gap: 0.625rem;
+    background: color-mix(in srgb, var(--w-phos) 6%, var(--w-raised));
+    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--w-phos) 14%, transparent);
+  }
+
+  .next-talk__month,
+  .next-talk__year {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.19em;
+    text-transform: uppercase;
+  }
+
+  .next-talk__month {
+    color: var(--w-phos);
+  }
+
+  .next-talk__year {
+    color: var(--w-faint);
+  }
+
+  .next-talk__days {
+    font-family: var(--font-display);
+    font-size: clamp(2.25rem, 6vw, 3.25rem);
+    line-height: 0.9;
+    letter-spacing: 0.01em;
+    color: var(--w-text);
+    white-space: nowrap;
+  }
+
+  /* the invitation is lit; what kind of event it is stays at label grey */
+  .next-talk__live {
+    color: var(--w-phos);
+  }
+
+  .next-talk__sep {
+    margin-inline: 0.125em;
+  }
+
+  .next-talk__title {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    font-weight: 400;
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    line-height: 0.95;
+    letter-spacing: 0.005em;
+    color: var(--w-text);
+    margin: 0.625rem 0 0.75rem;
+    text-wrap: balance;
+  }
+
+  .next-talk__body {
+    margin: 0;
+    max-width: 58ch;
+    font-size: 0.9375rem;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--w-dim);
+  }
+
+  .next-talk__where {
+    display: flex;
+    align-items: center;
+    gap: 0.4375rem;
+    margin: 0.875rem 0 0;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    color: var(--w-text);
+  }
+
+  .next-talk__where :global(svg) {
+    flex: 0 0 auto;
+    color: var(--w-phos);
+  }
+
+  .next-talk__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.875rem 1.25rem;
+  }
+
+  .next-talk__past {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    color: var(--w-dim);
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+    transition: color 0.18s ease;
+  }
+
+  .next-talk__past:hover,
+  .next-talk__past:focus-visible {
+    color: var(--w-phos);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .next-talk__past {
+      transition: none;
+    }
+  }
+
+  @media (min-width: 820px) {
+    .next-talk__strip {
+      grid-template-columns: auto 1fr auto;
+    }
+
+    .next-talk__date {
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 0.5rem;
+      padding-inline: clamp(1.5rem, 3vw, 2.5rem);
+    }
+
+    .next-talk__actions {
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+    }
+  }
+</style>

@@ -464,6 +464,22 @@ export const STACK = [
   },
 ];
 
+/* The talk that has not happened yet. `ends` is the day after the last day of the
+   event, in the venue's timezone: the announcement takes itself down from then
+   on, so a finished conference is never advertised as upcoming. Once the
+   recording is out, move the talk into TALKS and point this at the next one. */
+export const NEXT_TALK = {
+  event: 'RustChinaConf 2026',
+  href: 'https://rustchinaconf.org/',
+  city: 'Shenzhen, China',
+  month: 'Oct',
+  days: '15–17',
+  year: '2026',
+  starts: '2026-10-15',
+  ends: '2026-10-18T00:00:00+08:00',
+  body: 'There will be a talk on Robrix at RustChinaConf 2026, held alongside GOSIM Shenzhen. The day and time will be posted here once the conference publishes its schedule.',
+} as const;
+
 export type Talk = {
   title: string;
   event: string;
