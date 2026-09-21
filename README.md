@@ -5,14 +5,17 @@ client written from scratch in Rust.
 
 ## The idea
 
-The site runs on one conceit: **light mode is the simulation, dark mode is the
-real world, and the theme toggle is the pill.** That isn't a skin. It's wired
-into the design tokens — inside the simulation there is no phosphor green, no
-glow, and no digital rain. Every component reads the same token names, so a
-section written once renders alive in one world and deliberately flat in the
-other.
+The site keeps a Matrix-inspired visual language: green code rain, phosphor
+highlights, monospace details, and decoding text. The story is about Robrix's
+flexible workspace and the open-source community behind it.
 
-The real world is the default. You have to choose the simulation.
+The full-width hero pairs the product name with a cube made of glowing glyphs.
+Rain pauses when the hero is off screen or the tab is hidden. A visible pause
+control and a static rendering for reduced-motion preferences keep it comfortable.
+
+Dark mode is the default. The theme selector offers Dark, Light, and System;
+both page themes use green accents, and the hero stays a dark code-rain canvas.
+Existing saved light preferences are preserved.
 
 ## Running it
 
@@ -32,12 +35,12 @@ Node 20.3+ required.
 src/
 ├── data/site.ts        every fact on the site — release files, features,
 │                       platforms, talks. Bump RELEASE when a version ships.
-├── styles/global.css   the two worlds, as design tokens
-├── layouts/Base.astro  head, pre-paint world resolution, header, footer
+├── styles/global.css   light and dark design tokens
+├── layouts/Base.astro  head, pre-paint theme resolution, header, footer
 ├── components/
-│   ├── Hero.astro      the draggable seam between the two realities
-│   ├── Thesis.astro    "There is no Electron.", decoding out of glyph noise
-│   ├── Difference.astro  how Robrix differs from a typical Matrix client
+│   ├── Hero.astro      the code-rain hero and glyph cube
+│   ├── Thesis.astro    "Built in Rust.", decoding out of glyph noise
+│   ├── ThemeToggle.astro  persistent light/dark/system preference
 │   ├── Dock.astro      the signature dockable-tabs feature
 │   └── ...
 └── pages/
@@ -59,20 +62,16 @@ src/
 node scripts/make-og.mjs
 ```
 
-Renders `public/images/og.png` from SVG via sharp. It substitutes Impact and
+Renders `public/images/og.png` from SVG via sharp and exports the matching
+`public/images/robrix-code.svg` mark for the homepage. It substitutes Impact and
 Menlo for Anton and JetBrains Mono, so run it on a machine that has them
 (any macOS). The cube is sampled from `public/images/robrix-logo.png` and the
 rain is seeded, so the output only changes when the script or the logo does.
 
 ## Known gaps
 
-- **The dock screenshot is a stand-in.** `public/images/robrix-dock.png` is a
-  frame pulled from a 2025 pull-request demo video: 1264 px, light theme, older
-  UI, lightness-inverted at render time to sit in the dark world. Replace it
-  with a real high-resolution capture of the current build and delete the
-  `filter` rule in `Dock.astro`.
-- Comparison claims in `DIFFERENCE` are phrased against the *typical* Matrix
-  client, deliberately — the ecosystem is large and has not been audited
-  exhaustively.
+- **The dock screenshot is from an older demo.** `public/images/robrix-dock.png`
+  is a frame from a 2025 pull-request video, shown in its original light theme.
+  Replace it with a high-resolution capture of the current build when available.
 
 MIT, like Robrix.

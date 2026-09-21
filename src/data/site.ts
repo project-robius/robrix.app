@@ -10,7 +10,7 @@ export const SITE = {
   url: 'https://robrix.app',
   tagline: 'A fast, powerful Matrix chat client written from scratch in Rust.',
   description:
-    'Robrix is a native Matrix chat client written from scratch in Rust. Dockable tabs let you keep every room open at once. No Electron, no web engine, no JavaScript — on macOS, Linux, Windows, Android and iOS.',
+    'Make room for your conversations. Robrix is a native Matrix client built in Rust, with dockable rooms and threads on macOS, Linux, Windows, Android and iOS.',
 } as const;
 
 export const LINKS = {
@@ -270,84 +270,22 @@ export const BUILDS = [
   },
 ];
 
-/**
- * The argument the hero makes, in numbers. Bar length reads as the magnitude of
- * the value beside it — how big the renderer, how much memory, how many rooms —
- * so it means the same thing on both sides of the seam.
- */
-export const CONTRAST = {
-  sim: [
-    { k: 'Renderer size', v: 'Chromium', bar: 100 },
-    { k: 'Memory', v: 'Hundreds of MB', bar: 86 },
-    { k: 'Rooms on screen', v: 'One', bar: 12 },
-  ],
-  real: [
-    { k: 'Renderer size', v: 'Makepad', bar: 18 },
-    { k: 'Memory', v: 'Native footprint', bar: 16 },
-    { k: 'Rooms on screen', v: 'All of them', bar: 100 },
-  ],
-};
-
-/**
- * Differences from the common pattern among widely-used Matrix clients. Phrased
- * as "typical", never "every client" — the ecosystem is large and we haven't
- * audited all of it. Each Robrix column entry is something the client does today.
- */
-export const DIFFERENCE = [
-  {
-    axis: 'Rooms on screen',
-    typical: 'One at a time',
-    robrix: 'As many as you can fit',
-    note: 'Dock a second room beside the first, then a third below it.',
-  },
-  {
-    axis: 'Threads',
-    typical: 'A side panel on one room',
-    robrix: 'Their own dockable pane',
-    note: 'A thread can sit beside its room, or across the window from it.',
-  },
-  {
-    axis: 'Layout',
-    typical: 'Fixed by the app',
-    robrix: 'Split, stack, drag — and it persists',
-    note: 'Robrix restores your arrangement on the next launch.',
-  },
-  {
-    axis: 'On the desktop',
-    typical: 'A web app in a native shell',
-    robrix: 'Native code, rendered on the GPU',
-    note: 'No Chromium process, no DOM, no JavaScript bridge.',
-  },
-  {
-    axis: 'On mobile',
-    typical: 'A separate codebase per platform',
-    robrix: 'The same Rust as the desktop',
-    note: 'iOS and Android build from the source that builds macOS.',
-  },
-  {
-    axis: 'Loading older messages',
-    typical: 'The timeline jumps',
-    robrix: 'The timeline holds position',
-    note: 'Images and previews fill in around where you are reading.',
-  },
-];
-
 export type Feature = { title: string; body: string; icon: string };
 
 export const SIGNATURE: Feature[] = [
   {
     title: 'Dockable tabs',
-    body: 'Split, stack and drag rooms and threads into any layout you like — the same way your IDE or your browser works. Robrix remembers it between launches.',
+    body: 'Arrange rooms and threads side by side, or stack them in tabs. Your layout is saved between launches.',
     icon: 'tabler:layout-columns',
   },
   {
     title: 'A timeline that stays put',
-    body: 'Scroll position never jumps while messages, images and previews load in around it. This is deliberate, and it took real work.',
+    body: 'Keep your place in a conversation while older messages, images, and previews load around you.',
     icon: 'tabler:arrow-autofit-height',
   },
   {
     title: 'Native sliding sync',
-    body: 'Log in fast and get your full rooms list without the long first-sync wait. Requires a homeserver with native sliding sync, like Element X needs.',
+    body: 'Get connected and bring your rooms up to date with native sliding sync. Requires a homeserver that supports it.',
     icon: 'tabler:refresh',
   },
 ];
@@ -399,7 +337,7 @@ export const FEATURES: Feature[] = [
     icon: 'tabler:layout-grid',
   },
   {
-    title: 'Real text input',
+    title: 'Keyboard and text input',
     body: 'Single and multi-line inputs that behave the way you expect, with full keyboard navigation, selection shortcuts and CJK IME support.',
     icon: 'tabler:keyboard',
   },
@@ -436,8 +374,8 @@ export const ROADMAP: RoadmapItem[] = [
 export const STACK = [
   {
     name: 'Rust',
-    role: 'The whole thing',
-    body: 'Every line, top to bottom. Memory safety and native speed without a garbage collector in the render path.',
+    role: 'Language',
+    body: 'The language behind Robrix, bringing memory safety and native performance to desktop and mobile.',
     href: LINKS.rust,
     icon: 'tabler:brand-rust',
   },
@@ -458,7 +396,7 @@ export const STACK = [
   {
     name: 'Project Robius',
     role: 'App framework',
-    body: 'The multi-platform Rust app-dev framework Robrix is built on, and the reason one codebase reaches six targets.',
+    body: 'The framework and platform integrations that help bring Rust applications like Robrix to desktop and mobile.',
     href: LINKS.robius,
     icon: 'tabler:box',
   },
@@ -550,7 +488,7 @@ export const TALKS: Talk[] = [
 ];
 
 export const NAV = [
-  { label: 'The difference', href: '/#difference' },
+  { label: 'The layout', href: '/#dock' },
   { label: 'Features', href: '/#features' },
   { label: 'Platforms', href: '/#platforms' },
   { label: 'Download', href: '/download' },

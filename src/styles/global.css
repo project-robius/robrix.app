@@ -5,18 +5,16 @@
 @import '@fontsource-variable/jetbrains-mono';
 
 /* ==========================================================================
-   TWO WORLDS
+   MATRIX-INSPIRED THEMES
 
-   The whole site runs on one idea: light mode is the simulation, dark mode
-   is the real world, and the theme toggle is the pill. That isn't a skin —
-   it's mechanical. In the simulation there is no phosphor green, no glow,
-   and no rain. Every component reads the same token names, so a section
-   written once renders alive in one world and flat in the other.
+   Phosphor green, subtle scanlines, and code rain give both themes their
+   identity. Red adds small editorial accents and ambient warmth. The hero
+   retains its cinematic dark canvas in either theme.
    ========================================================================== */
 
-/* ---- THE REAL (default) ---- */
+/* ---- DARK (default) ---- */
 :root,
-:root[data-world='real'] {
+:root[data-theme='dark'] {
   --w-bg: #07090a;
   --w-raised: #0d1114;
   --w-sunken: #030405;
@@ -25,36 +23,35 @@
   --w-text: #e8ecea;
   --w-dim: #8a9691;
   --w-faint: #737f79;
-  --w-accent: #ff2233;
-  --w-accent-ink: #ffffff;
+  --w-accent: #ff5865;
+  --w-accent-ink: #25070d;
   --w-phos: #00ff41;
   --w-phos-ink: #04160b;
   --w-phos-soft: rgb(0 255 65 / 0.12);
   --w-shadow: 0 24px 60px rgb(0 0 0 / 0.6);
   --w-glow: 0 0 40px rgb(0 255 65 / 0.22);
-  --w-glow-accent: 0 0 40px rgb(255 34 51 / 0.28);
+  --w-glow-accent: 0 0 32px rgb(255 88 101 / 0.22);
   --w-rain: 0.5;
   --w-grid: rgb(138 150 145 / 0.06);
   --w-scrim: rgb(7 9 10 / 0.72);
   color-scheme: dark;
 }
 
-/* ---- THE SIMULATION ---- */
-:root[data-world='sim'] {
-  --w-bg: #e8edf2;
-  --w-raised: #f4f7fa;
-  --w-sunken: #dae2ea;
-  --w-line: #ccd6e0;
-  --w-line-strong: #aebccb;
-  --w-text: #333f4b;
-  --w-dim: #57646f;
-  --w-faint: #5f6c78;
-  --w-accent: #3e7bc4;
+/* ---- LIGHT ---- */
+:root[data-theme='light'] {
+  --w-bg: #eff4f0;
+  --w-raised: #f8fbf8;
+  --w-sunken: #e4ece6;
+  --w-line: #cbd9ce;
+  --w-line-strong: #9fb6a6;
+  --w-text: #203a2a;
+  --w-dim: #4d6655;
+  --w-faint: #556e5d;
+  --w-accent: #b32436;
   --w-accent-ink: #ffffff;
-  /* no green in the simulation. it borrows the institutional blue instead. */
-  --w-phos: #3e7bc4;
+  --w-phos: #087d35;
   --w-phos-ink: #ffffff;
-  --w-phos-soft: rgb(62 123 196 / 0.1);
+  --w-phos-soft: rgb(8 125 53 / 0.1);
   --w-shadow: 0 10px 24px rgb(70 82 95 / 0.1);
   /* A transparent zero-shadow rather than `none`: these tokens get composed
      into comma-separated shadow lists, and `none` in a list is invalid CSS,
@@ -62,12 +59,12 @@
   --w-glow: 0 0 0 rgb(0 0 0 / 0);
   --w-glow-accent: 0 0 0 rgb(0 0 0 / 0);
   --w-rain: 0;
-  --w-grid: rgb(70 82 95 / 0.05);
-  --w-scrim: rgb(232 237 242 / 0.78);
+  --w-grid: rgb(8 125 53 / 0.07);
+  --w-scrim: rgb(239 244 240 / 0.78);
   color-scheme: light;
 }
 
-/* `inline` keeps the var() reference in the utility so the world can switch
+/* `inline` keeps the var() reference in the utility so the theme can switch
    at runtime rather than being baked in at build time. */
 @theme inline {
   --color-bg: var(--w-bg);
@@ -119,7 +116,7 @@ body {
     color 0.4s ease;
 }
 
-/* The real world needs a little depth between its dark sections. This lives
+/* Add a little depth between dark sections. This lives
    behind the page chrome rather than inside a specific component, so the thin
    signal and scanline texture can quietly connect the whole narrative. */
 body::before {
@@ -131,7 +128,7 @@ body::before {
   opacity: 1;
   background:
     radial-gradient(ellipse 48% 38% at 92% 12%, rgb(0 255 65 / 0.1), transparent 70%),
-    radial-gradient(ellipse 30% 24% at 7% 76%, rgb(255 34 51 / 0.06), transparent 72%),
+    radial-gradient(ellipse 30% 24% at 7% 76%, rgb(255 88 101 / 0.07), transparent 72%),
     repeating-linear-gradient(0deg, rgb(202 255 218 / 0.025) 0 1px, transparent 1px 5px);
   background-size: 100% 100%, 100% 100%, 100% 100%;
   animation: u-atmosphere-drift 22s ease-in-out infinite alternate;
@@ -146,17 +143,16 @@ body > * {
   z-index: 1;
 }
 
-:root[data-world='sim'] body::before {
-  opacity: 0;
+:root[data-theme='light'] body::before {
+  opacity: 0.15;
 }
 
-/* The mark joins the phosphor system in the real world; the simulation keeps
-   its original product colour so the two realities remain legible at a glance. */
+/* The brand mark uses the same phosphor accent as the surrounding interface. */
 .brand__mark {
   transition: filter 0.35s ease;
 }
 
-:root[data-world='real'] .brand__mark {
+:root[data-theme='dark'] .brand__mark {
   filter: brightness(0) saturate(100%) invert(79%) sepia(98%) saturate(902%) hue-rotate(82deg) brightness(108%) contrast(106%);
 }
 
@@ -242,7 +238,7 @@ a {
   margin: 0;
 }
 
-/* faint technical grid — present in both worlds, louder in the real one */
+/* A faint technical grid, tuned to each theme. */
 .u-grid-bg {
   position: absolute;
   inset: 0;

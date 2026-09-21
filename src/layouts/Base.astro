@@ -21,7 +21,7 @@ const staging = new URL(Astro.site ?? SITE.url).hostname !== new URL(SITE.url).h
 ---
 
 <!doctype html>
-<html lang="en" data-world="real">
+<html lang="en" data-theme="dark" data-theme-preference="dark">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -48,16 +48,23 @@ const staging = new URL(Astro.site ?? SITE.url).hostname !== new URL(SITE.url).h
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
-    {/* Resolve the world before first paint, or the page flashes the wrong reality. */}
+    {/* Resolve the saved theme before first paint to avoid a color flash. */}
     <script is:inline>
       (function () {
+        var preference = 'dark';
         try {
-          var saved = localStorage.getItem('robrix-world');
-          // The real world is the default. You have to choose the simulation.
-          document.documentElement.dataset.world = saved === 'sim' ? 'sim' : 'real';
-        } catch (e) {
-          document.documentElement.dataset.world = 'real';
-        }
+          var saved = localStorage.getItem('robrix-theme');
+          if (saved === 'dark' || saved === 'light' || saved === 'system') {
+            preference = saved;
+          } else if (!saved && localStorage.getItem('robrix-world') === 'sim') {
+            // Keep the light preference of visitors who used the previous switch.
+            preference = 'light';
+          }
+        } catch (e) {}
+        document.documentElement.dataset.themePreference = preference;
+        document.documentElement.dataset.theme = preference === 'system'
+          ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+          : preference;
       })();
     </script>
   </head>

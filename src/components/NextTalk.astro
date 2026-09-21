@@ -86,8 +86,8 @@ import { NEXT_TALK } from '~/data/site';
     display: flex;
     align-items: baseline;
     gap: 0.625rem;
-    background: color-mix(in srgb, var(--w-phos) 6%, var(--w-raised));
-    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--w-phos) 14%, transparent);
+    background: color-mix(in srgb, var(--w-accent) 6%, var(--w-raised));
+    box-shadow: inset 0 2px 0 var(--w-accent);
   }
 
   .next-talk__month,
@@ -100,7 +100,7 @@ import { NEXT_TALK } from '~/data/site';
   }
 
   .next-talk__month {
-    color: var(--w-phos);
+    color: var(--w-accent);
   }
 
   .next-talk__year {
@@ -118,7 +118,7 @@ import { NEXT_TALK } from '~/data/site';
 
   /* the invitation is lit; what kind of event it is stays at label grey */
   .next-talk__live {
-    color: var(--w-phos);
+    color: var(--w-accent);
   }
 
   .next-talk__sep {

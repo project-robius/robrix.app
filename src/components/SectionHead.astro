@@ -30,6 +30,17 @@ const { eyebrow, title, lede, align = 'left' } = Astro.props;
     margin-inline: auto;
   }
 
+  .sec-head .u-label::before {
+    content: '';
+    display: inline-block;
+    width: 1.375rem;
+    height: 2px;
+    margin-right: 0.625rem;
+    vertical-align: middle;
+    background: var(--w-accent);
+    box-shadow: var(--w-glow-accent);
+  }
+
   .sec-head__title {
     font-family: var(--font-display);
     text-transform: uppercase;

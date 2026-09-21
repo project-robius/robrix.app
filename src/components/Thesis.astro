@@ -1,25 +1,19 @@
 ---
-/**
- * The thesis. "There is no spoon" is the film's line; "There is no Electron" is
- * the release note. It decodes out of glyph noise — but only in the real world.
- * In the simulation nothing is revealed to you, so the line just sits there.
- */
-const LINE = 'There is no Electron.';
-const DENIALS = ['No web engine', 'No JavaScript', 'No cruft'];
+const LINE = 'Built in Rust.';
+const QUALITIES = ['Native UI', 'GPU rendering', 'Open source'];
 ---
 
 <section class="thesis" aria-labelledby="thesis-line">
   <div class="u-grid-bg" aria-hidden="true"></div>
   <div class="u-shell thesis__inner">
-    <p class="u-label thesis__eyebrow">The whole argument</p>
-    <h2 id="thesis-line" class="thesis__line" data-decode={LINE}>{LINE}</h2>
-    <ul class="thesis__denials">
-      {DENIALS.map((d) => <li class="u-chip">{d}</li>)}
+    <p class="u-label thesis__eyebrow">Made for Matrix</p>
+    <h2 id="thesis-line" class="thesis__line" data-decode={LINE} aria-label={LINE}>{LINE}</h2>
+    <ul class="thesis__qualities">
+      {QUALITIES.map((quality) => <li class="u-chip">{quality}</li>)}
     </ul>
     <p class="thesis__body">
-      Robrix renders on the GPU through Makepad and speaks Matrix through the official Rust SDK. There is no
-      browser anywhere in the stack — not wrapped, not embedded, not hidden. That is why it starts fast, stays
-      small, and scrolls a million messages without thinking about it.
+      Robrix pairs Makepad's GPU-rendered interface with the Matrix Rust SDK for messaging and encryption.
+      One Rust codebase brings that experience to desktop and mobile.
     </p>
 
   </div>
@@ -59,7 +53,7 @@ const DENIALS = ['No web engine', 'No JavaScript', 'No cruft'];
     text-wrap: balance;
   }
 
-  .thesis__denials {
+  .thesis__qualities {
     list-style: none;
     margin: 0 0 2rem;
     padding: 0;
@@ -86,7 +80,7 @@ const DENIALS = ['No web engine', 'No JavaScript', 'No cruft'];
   if (node) {
     const target = node.dataset.decode!;
     const NOISE = 'ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉ#%&@$*+=<>/\\|';
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
 
     let played = false;
 
@@ -96,6 +90,11 @@ const DENIALS = ['No web engine', 'No JavaScript', 'No cruft'];
 
       let settled = 0;
       const timer = window.setInterval(() => {
+        if (reduced.matches) {
+          window.clearInterval(timer);
+          node.textContent = target;
+          return;
+        }
         let out = '';
         for (let i = 0; i < target.length; i++) {
           const ch = target[i];
@@ -116,14 +115,11 @@ const DENIALS = ['No web engine', 'No JavaScript', 'No cruft'];
       }, 42);
     };
 
-    /* Nothing is revealed to you inside the simulation. */
-    const eligible = () => document.documentElement.dataset.world !== 'sim' && !reduced;
-
-    if (eligible()) {
+    if (!reduced.matches) {
       new IntersectionObserver(
         ([entry], obs) => {
-          if (entry.isIntersecting && eligible()) {
-            play();
+          if (entry.isIntersecting) {
+            if (!reduced.matches) play();
             obs.disconnect();
           }
         },

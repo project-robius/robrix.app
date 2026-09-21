@@ -9,9 +9,9 @@ const ready = TARGETS.filter((t) => t.status === 'ready').length;
 <section id="platforms" class="u-section platforms">
   <div class="u-shell">
     <SectionHead
-      eyebrow="One crate, every target"
-      title="No platform-specific code"
-      lede="Not a shared core with native shells bolted on top. The same Rust, the same UI, compiled for a different target — here is the whole of it."
+      eyebrow="Desktop and mobile"
+      title="Your devices. One codebase."
+      lede="Robrix's Rust codebase and Makepad interface run across macOS, Linux, Windows, Android, and iOS. Here is how to build it yourself."
     />
 
     <div class="build">
@@ -39,7 +39,7 @@ const ready = TARGETS.filter((t) => t.status === 'ready').length;
 
       <p class="build__foot">
         <Icon name="tabler:git-branch" width="14" height="14" />
-        <span>One crate. One source tree. No per-platform forks to keep in step.</span>
+        <span>One crate and one shared source tree, with contributions that reach every platform.</span>
       </p>
     </div>
 
@@ -66,7 +66,7 @@ const ready = TARGETS.filter((t) => t.status === 'ready').length;
     </ul>
 
     <p class="pf-getit">
-      Every one of those is a build you can install today.{' '}
+      Builds are available for {ready} platforms, with OpenHarmony support in progress.{' '}
       <a href="/download">See all downloads →</a>
     </p>
   </div>

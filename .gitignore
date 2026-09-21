@@ -5,3 +5,5 @@ node_modules/
 *.log
 .env
 .env.production
+.playwright-cli/
+output/playwright/

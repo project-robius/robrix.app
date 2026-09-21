@@ -15,7 +15,7 @@ const columns = DOWNLOAD_COLUMNS.map((ids) => ids.map((id) => byId.get(id)!).fil
   <section class="u-section dl-head">
     <div class="u-grid-bg" aria-hidden="true"></div>
     <div class="u-shell">
-      <SectionHead eyebrow={`${RELEASE.tag} · ${RELEASE.dateLabel}`} title="Take the red pill">
+      <SectionHead eyebrow={`${RELEASE.tag} · ${RELEASE.dateLabel}`} title="Download Robrix">
         <p class="u-lede">
           Robrix is free and MIT-licensed. Pick your platform below — we've highlighted the one you appear to be
           on. Everything here is a direct download from the GitHub release.
@@ -251,8 +251,8 @@ const columns = DOWNLOAD_COLUMNS.map((ids) => ids.map((id) => byId.get(id)!).fil
     }
   }
 
-  /* Nothing breathes inside the simulation — it holds a flat ring instead. */
-  :root[data-world='sim'] .dl-card[data-you='true']::after {
+  /* A steady outline keeps the highlighted card subtle in the light theme. */
+  :root[data-theme='light'] .dl-card[data-you='true']::after {
     animation: none;
     opacity: 0.55;
   }

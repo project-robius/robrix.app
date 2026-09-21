@@ -5,6 +5,7 @@
  * on any machine with the fonts named below. Run: node scripts/make-og.mjs
  */
 import sharp from 'sharp';
+import { writeFile } from 'node:fs/promises';
 
 const W = 1200;
 const H = 630;
@@ -19,6 +20,7 @@ const MONO = "Menlo, 'DejaVu Sans Mono', monospace";
 const BODY = "'Helvetica Neue', Helvetica, Arial, sans-serif";
 
 const PHOS = '#00ff41';
+const ACCENT = '#ff5865';
 const HEAD = '#dcffe4';
 
 /* Seeded, so the rain falls the same way on every run and the PNG only changes
@@ -45,8 +47,7 @@ const CELL_W = 13;
 const CELL_H = 15;
 const COLS = Math.ceil(W / CELL_W);
 const ROWS = Math.ceil(H / CELL_H);
-const SLIVER = 96;
-const FIRST_COL = Math.ceil(SLIVER / CELL_W) + 1;
+const FIRST_COL = 0;
 
 /* ---- the cube ---- */
 const CUBE = { col: 57, row: 6, cols: 33, rows: 29 };
@@ -127,21 +128,11 @@ const cubeFlares = lit.filter((cell) => cell.flare).map((cell) => glyphAt(cell, 
 
 const CUBE_CX = (CUBE.col + CUBE.cols / 2) * CELL_W;
 const CUBE_CY = (CUBE.row + CUBE.rows / 2) * CELL_H;
-const TEXT_X = 168;
+const TEXT_X = 72;
 
 const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
   <defs>
-    <linearGradient id="seam" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#ff2233" stop-opacity="0.1"/>
-      <stop offset="26%" stop-color="#ff2233"/>
-      <stop offset="76%" stop-color="${PHOS}"/>
-      <stop offset="100%" stop-color="${PHOS}" stop-opacity="0.1"/>
-    </linearGradient>
-    <linearGradient id="simfade" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#e8edf2"/>
-      <stop offset="100%" stop-color="#d5dee7"/>
-    </linearGradient>
-    <!-- the rain stays behind the argument, not in it -->
+    <!-- Keep the copy legible over the rain. -->
     <linearGradient id="scrim" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0%" stop-color="#07090a" stop-opacity="0.9"/>
       <stop offset="62%" stop-color="#07090a" stop-opacity="0.8"/>
@@ -152,9 +143,9 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" 
       <stop offset="55%" stop-color="${PHOS}" stop-opacity="0.05"/>
       <stop offset="100%" stop-color="${PHOS}" stop-opacity="0"/>
     </radialGradient>
-    <radialGradient id="ember" cx="${SLIVER + 40}" cy="${H}" r="360" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#ff2233" stop-opacity="0.14"/>
-      <stop offset="100%" stop-color="#ff2233" stop-opacity="0"/>
+    <radialGradient id="warmth" cx="1200" cy="480" r="400" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="${ACCENT}" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="${ACCENT}" stop-opacity="0"/>
     </radialGradient>
     <pattern id="scan" width="4" height="4" patternUnits="userSpaceOnUse">
       <rect width="4" height="1" fill="#caffda" fill-opacity="0.035"/>
@@ -169,13 +160,13 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" 
 
   <rect width="${W}" height="${H}" fill="#07090a"/>
   <rect width="${W}" height="${H}" fill="url(#halo)"/>
-  <rect width="${W}" height="${H}" fill="url(#ember)"/>
+  <rect width="${W}" height="${H}" fill="url(#warmth)"/>
 
   <g font-family="${MONO}" font-size="13" text-anchor="middle">
     <g fill="${PHOS}">${rain}</g>
     <g fill="${HEAD}">${rainHeads}</g>
   </g>
-  <rect x="${SLIVER}" y="0" width="660" height="${H}" fill="url(#scrim)"/>
+  <rect x="0" y="0" width="780" height="${H}" fill="url(#scrim)"/>
 
   <!-- the cube: a bloom pass under the sharp pass, so it glows like a lit tube -->
   <g font-family="${MONO}" font-size="13" font-weight="bold" text-anchor="middle">
@@ -185,25 +176,33 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" 
   </g>
 
   <rect width="${W}" height="${H}" fill="url(#scan)"/>
+  <rect x="${TEXT_X}" y="92" width="44" height="3" fill="${ACCENT}"/>
+  <rect x="0" y="628" width="264" height="2" fill="${ACCENT}"/>
 
-  <!-- a slice of the simulation, so the card carries the site's split -->
-  <rect x="0" y="0" width="${SLIVER}" height="${H}" fill="url(#simfade)"/>
-  <rect x="${SLIVER - 2}" y="0" width="3" height="${H}" fill="url(#seam)"/>
-  <rect x="${SLIVER / 2 - 26}" y="302" width="52" height="26" rx="13" fill="#3e7bc4"/>
+  <text x="${TEXT_X}" y="265" font-family="${DISPLAY}" font-size="168" letter-spacing="2" fill="#ffffff">ROBRIX</text>
 
-  <text x="${TEXT_X}" y="278" font-family="${DISPLAY}" font-size="168" letter-spacing="2" fill="#ffffff">ROBRIX</text>
+  <text x="${TEXT_X}" y="337" font-family="${MONO}" font-size="32" font-weight="bold" letter-spacing="-0.6" fill="${PHOS}">MAKE ROOM FOR</text>
+  <text x="${TEXT_X}" y="380" font-family="${MONO}" font-size="32" font-weight="bold" letter-spacing="-0.6" fill="${PHOS}">YOUR CONVERSATIONS.</text>
 
-  <text x="${TEXT_X}" y="352" font-family="${MONO}" font-size="39" font-weight="bold" letter-spacing="-0.6" fill="${PHOS}" filter="url(#glow)" opacity="0.7">THERE IS NO ELECTRON.</text>
-  <text x="${TEXT_X}" y="352" font-family="${MONO}" font-size="39" font-weight="bold" letter-spacing="-0.6" fill="${PHOS}">THERE IS NO ELECTRON.</text>
+  <text x="${TEXT_X}" y="442" font-family="${BODY}" font-size="25" fill="#b4beb9">A native Matrix client built in Rust.</text>
+  <text x="${TEXT_X}" y="478" font-family="${BODY}" font-size="25" fill="#b4beb9">Rooms and threads, arranged your way.</text>
 
-  <text x="${TEXT_X}" y="418" font-family="${BODY}" font-size="25" fill="#b4beb9">A Matrix chat client written from scratch in Rust.</text>
-  <text x="${TEXT_X}" y="454" font-family="${BODY}" font-size="25" fill="#b4beb9">Dockable tabs. Six platforms. One codebase.</text>
-
-  <!-- the red pill marks the address: this is where you take it -->
-  <rect x="${TEXT_X}" y="536" width="52" height="26" rx="13" fill="#ff2233"/>
-  <text x="${TEXT_X + 70}" y="557" font-family="${MONO}" font-size="22" letter-spacing="2" fill="#e8ecea">robrix.app</text>
+  <rect x="${TEXT_X}" y="549" width="12" height="3" fill="${ACCENT}"/>
+  <text x="${TEXT_X + 28}" y="557" font-family="${MONO}" font-size="22" letter-spacing="2" fill="#e8ecea">robrix.app</text>
 </svg>`;
 
 await sharp(Buffer.from(svg)).png({ compressionLevel: 9 }).toFile(new URL('../public/images/og.png', import.meta.url).pathname);
 
-console.log('wrote public/images/og.png');
+// Reuse the same code-built brand mark in the animated homepage hero.
+const codeMark = `<svg xmlns="http://www.w3.org/2000/svg" width="560" height="560" viewBox="676 30 560 560">
+  <defs>
+    <filter id="bloom" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="9"/></filter>
+  </defs>
+  <g font-family="${MONO}" font-size="13" font-weight="bold" text-anchor="middle">
+    <g fill="${PHOS}" filter="url(#bloom)">${cubeSlab}${cubeGlyphs}</g>
+    <g fill="${PHOS}">${cubeSlab}${cubeGlyphs}</g>
+    <g fill="${HEAD}">${cubeFlares}</g>
+  </g>
+</svg>`;
+await writeFile(new URL('../public/images/robrix-code.svg', import.meta.url), codeMark);
+console.log('wrote public/images/og.png and public/images/robrix-code.svg');

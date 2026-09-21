@@ -7,9 +7,9 @@ import { STACK } from '~/data/site';
 <section id="stack" class="u-section stack">
   <div class="u-shell">
     <SectionHead
-      eyebrow="Built with"
-      title="What it is actually made of"
-      lede="Four things, and not one of them is a browser. Robrix contributes back to Makepad heavily — a lot of what makes the client feel good landed in the toolkit first."
+      eyebrow="Part of an open community"
+      title="Built together, in the open."
+      lede="Robrix is made possible by Matrix, Rust, Makepad, and Project Robius. We're grateful to the people building these tools and the wider family of Matrix clients."
     />
 
     <ul class="stack__list">
@@ -31,6 +31,11 @@ import { STACK } from '~/data/site';
         ))
       }
     </ul>
+
+    <p class="stack__community">
+      We contribute improvements back to Makepad as we build Robrix.{' '}
+      <a href="https://matrix.org/ecosystem/clients/" target="_blank" rel="noopener noreferrer">Explore the Matrix ecosystem →</a>
+    </p>
   </div>
 </section>
 
@@ -47,6 +52,20 @@ import { STACK } from '~/data/site';
     display: grid;
     gap: 1rem;
     grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  }
+
+  .stack__community {
+    margin: 2rem 0 0;
+    color: var(--w-dim);
+    font-size: 0.9375rem;
+    max-width: 65ch;
+    line-height: 1.8;
+  }
+
+  .stack__community a {
+    color: var(--w-phos);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
   }
 
   .stack__item {

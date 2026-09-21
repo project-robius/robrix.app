@@ -8,9 +8,9 @@ import { SIGNATURE } from '~/data/site';
   <div class="u-grid-bg" aria-hidden="true"></div>
   <div class="u-shell">
     <SectionHead
-      eyebrow="The signature feature"
-      title="Every room. One window."
-      lede="Robrix brings a dockable-tab layout to Matrix. Split, stack and drag rooms and threads into whatever arrangement you want — the way your IDE and your browser already work — and Robrix puts it back exactly as you left it."
+      eyebrow="Your conversations, your layout"
+      title="A little more room to talk."
+      lede="Keep a thread beside its room, follow a few conversations together, or give one room your full attention. Split, stack and drag tabs into place — Robrix remembers your layout."
     />
 
     <figure class="dock__shot">
@@ -24,7 +24,7 @@ import { SIGNATURE } from '~/data/site';
           decoding="async"
         />
       </div>
-      <figcaption>Robrix on macOS, with two room panes docked and four rooms open across them.</figcaption>
+      <figcaption>A docking demo on macOS: two room panes, four open conversations.</figcaption>
     </figure>
 
     <ul class="dock__points">
@@ -53,9 +53,7 @@ import { SIGNATURE } from '~/data/site';
     margin: 0 auto clamp(2.5rem, 5vw, 4rem);
   }
 
-  /* The frame carries the border and shadow, unfiltered — otherwise the invert
-     below turns the drop shadow into a white halo. The two phosphor layers are
-     the glow: a tight rim on the border and a wide, fainter spill behind it. */
+  /* A phosphor rim connects the app screenshot to the surrounding code rain. */
   .dock__frame {
     border-radius: 8px;
     border: 1px solid color-mix(in srgb, var(--w-phos) 28%, var(--w-line-strong));
@@ -68,12 +66,6 @@ import { SIGNATURE } from '~/data/site';
 
   .dock__shot img {
     width: 100%;
-  }
-
-  /* The only capture available is a light-theme build. In the real world it gets
-     lightness-inverted so it belongs; in the simulation it is already at home. */
-  :root[data-world='real'] .dock__shot img {
-    filter: invert(1) hue-rotate(180deg) saturate(0.86) contrast(0.94) brightness(1.06);
   }
 
   .dock__shot figcaption {

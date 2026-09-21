@@ -1,6 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components';
-import PillToggle from '~/components/PillToggle.astro';
+import ThemeToggle from '~/components/ThemeToggle.astro';
 import { NAV, LINKS, SITE, REPO } from '~/data/site';
 
 const path = Astro.url.pathname;
@@ -25,7 +25,7 @@ const isCurrent = (href: string) => href !== '/' && !href.startsWith('/#') && pa
     </nav>
 
     <div class="site-header__actions">
-      <PillToggle />
+      <ThemeToggle />
       <a
         href={LINKS.github}
         class="site-header__gh"
