@@ -4,7 +4,7 @@ description: "What happens to your data when you use Robrix, the open-source Mat
 layout: "~/layouts/Prose.astro"
 ---
 
-*Last updated: September 11, 2026*
+*Last updated: October 7, 2026*
 
 Robrix is an open-source [Matrix](https://matrix.org) chat client developed by [Project Robius](https://github.com/project-robius) and published under the [GOSIM Foundation](https://gosim.org). The purpose of this page is to explain, in plain English, what happens to your data when you use Robrix.
 
@@ -52,17 +52,18 @@ Robrix stores the following items locally in order to function properly:
 
 All of this lives on your device, and only on your device. It isn't sent to us (the Robrix developers or anyone at Project Robius), because there is nowhere on our end to send or store it.
 This data is stored inside Robrix's own application directory and relies on OS-level protections for app data and credentials. Robrix does not upload, sync, or back up any of it on your behalf. Anyone with physical access to an unlocked device can read it, so we recommend using device-level encryption and a screen lock if you consider any of your Matrix content to be of sensitive nature.
+The one exception is key backup, which you choose to turn on in Robrix's settings: your encryption keys are then encrypted on your device and stored on your homeserver, where only your recovery key can unlock them.
 
 Logging out of Robrix clears most of this on most platforms, and uninstalling the app will typically remove the rest or at least prompt you whether you want to keep or delete that app data.
 
 ## Specific features and what they touch
 
 - **Voice and video calls.** Robrix does not yet support voice or video calls.
-- **Speech-to-text dictation.** Tapping the microphone button in the message box lets you dictate a message instead of typing it. This uses only the native speech recognition service provided by your operating system: Apple's Speech framework on macOS and iOS, the system recognition service on Android (usually Google's), SAPI on Windows, and nothing on Linux (unsupported). Robrix asks permission for both audio input (microphone) access and on-device speech recognition as required by the platform. Robrix itself never stores, logs, or uploads audio, and has no access to the raw audio you speak; Robrix only receives the text words provided by your OS service.
+- **Speech-to-text dictation.** Tapping the microphone button in the message box lets you dictate a message instead of typing it. This uses only the native speech recognition service provided by your operating system: Apple's Speech framework on macOS and iOS, the system recognition service on Android (usually Google's), SAPI on Windows, and nothing on Linux (unsupported). Apple and Android devices prefer on-device recognition, but when it isn't available, the operating system may send your audio to Apple's servers or to your Android recognition provider (usually Google) to be transcribed, under their privacy policies. Windows recognition happens entirely on your device. Robrix asks permission for both audio input (microphone) access and speech recognition as required by the platform. Robrix itself never stores, logs, or uploads your audio; it only keeps the text that your OS service returns.
 - **Public rooms directory.** Browsing or searching for public rooms sends queries to your homeserver (and, if you search remote directories, to those servers as well).
 - **Link previews.** When a link is encountered, Robrix will ask your homeserver directly to fetch the linked URL on your behalf and return the link preview metadata. Robrix itself does not reach out to external sites directly to generate previews.
 - **Identity servers.** Robrix doesn't query an identity server by default. Discovery of users by email address or phone number is not supported, so your contacts are never accessed or uploaded anywhere.
-- **Single sign-on (SSO).** If your homeserver supports SSO and you choose to log in that way, Robrix opens the SSO provider's login page (for example, Google, GitHub, or your organization's identity provider) so you can authenticate directly with them. That provider --- not Robrix or your homeserver --- handles the login and may log it under their own privacy policy. Robrix only receives the resulting access token from your homeserver.
+- **Browser login (OAuth 2.0) and single sign-on (SSO).** If your homeserver offers browser login, Robrix opens your homeserver's login page in your web browser so you can sign in there; Robrix prefers this when it's available. If your homeserver uses SSO instead, Robrix opens the SSO provider's login page (for example, Google, GitHub, or your organization's identity provider) so you can authenticate directly with them. Those login pages and providers --- not Robrix --- handle the login and may log it under their own privacy policies. Robrix only receives the resulting access token from your homeserver.
 - **Push notifications.** Robrix doesn't currently route notifications through Apple, Google, or any other push gateway. Notifications, where supported, are generated locally from your active Matrix sync.
 - **Crash reports.** Robrix doesn't send crash reports anywhere. Any diagnostic logs the app writes stay on your device. If you encounter a bug, you are encouraged to voluntarily share those logs with the Robrix development team by [filing an issue on GitHub](https://github.com/project-robius/robrix/issues/new), but that is optional.
 

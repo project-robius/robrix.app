@@ -1,6 +1,6 @@
 /**
  * Every fact on this site comes from the Robrix repository, its README, or the
- * v1.0.0-beta.1 release. Keep it that way — no invented benchmarks, no fake
+ * v1.0.0-beta.2 release. Keep it that way — no invented benchmarks, no fake
  * testimonials. When a new release ships, RELEASE is the only thing to bump.
  */
 
@@ -16,7 +16,7 @@ export const SITE = {
 export const LINKS = {
   github: 'https://github.com/project-robius/robrix',
   releases: 'https://github.com/project-robius/robrix/releases',
-  latestRelease: 'https://github.com/project-robius/robrix/releases/tag/v1.0.0-beta.1',
+  latestRelease: 'https://github.com/project-robius/robrix/releases/tag/v1.0.0-beta.2',
   issues: 'https://github.com/project-robius/robrix/issues',
   license: 'https://github.com/project-robius/robrix/blob/main/LICENSE-MIT',
   matrixRoom: 'https://matrix.to/#/#robius-robrix:matrix.org',
@@ -31,22 +31,22 @@ export const LINKS = {
 
 export const REPO = {
   stars: 487,
-  forks: 67,
+  forks: 69,
   license: 'MIT',
 } as const;
 
 export const RELEASE = {
-  version: '1.0.0-beta.1',
-  tag: 'v1.0.0-beta.1',
-  date: '2026-09-08',
-  dateLabel: 'September 2026',
-  base: 'https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.1',
+  version: '1.0.0-beta.2',
+  tag: 'v1.0.0-beta.2',
+  date: '2026-10-07',
+  dateLabel: 'October 2026',
+  base: 'https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.2',
 } as const;
 
 const dl = (file: string) => `${RELEASE.base}/${file}`;
 
-/* The Arch package drops the hyphen out of the version: 1.0.0-beta.1 becomes
-   1.0.0beta.1. Derived rather than written out so RELEASE stays the only bump. */
+/* The Arch package drops the hyphen out of the version: 1.0.0-beta.2 becomes
+   1.0.0beta.2. Derived rather than written out so RELEASE stays the only bump. */
 const archVersion = RELEASE.version.replace('-', '');
 
 export type DownloadFile = {
@@ -84,7 +84,7 @@ export const PLATFORMS: Platform[] = [
         detail: 'M1 and later',
         file: `Robrix_${RELEASE.version}_aarch64.dmg`,
         href: dl(`Robrix_${RELEASE.version}_aarch64.dmg`),
-        size: '69.5 MB',
+        size: '70.4 MB',
         primary: true,
       },
       {
@@ -92,7 +92,7 @@ export const PLATFORMS: Platform[] = [
         detail: 'x86_64',
         file: `Robrix_${RELEASE.version}_x64.dmg`,
         href: dl(`Robrix_${RELEASE.version}_x64.dmg`),
-        size: '72.5 MB',
+        size: '73.5 MB',
       },
     ],
   },
@@ -110,7 +110,7 @@ export const PLATFORMS: Platform[] = [
         detail: 'x86_64',
         file: `robrix-${RELEASE.version}-windows-x86_64.exe`,
         href: dl(`robrix-${RELEASE.version}-windows-x86_64.exe`),
-        size: '53.4 MB',
+        size: '54.2 MB',
         primary: true,
       },
     ],
@@ -133,7 +133,7 @@ export const PLATFORMS: Platform[] = [
         detail: 'x86_64 · .deb',
         file: `robrix-${RELEASE.version}-ubuntu-24.04-x86_64.deb`,
         href: dl(`robrix-${RELEASE.version}-ubuntu-24.04-x86_64.deb`),
-        size: '71.0 MB',
+        size: '72.6 MB',
         primary: true,
       },
       {
@@ -141,49 +141,49 @@ export const PLATFORMS: Platform[] = [
         detail: 'aarch64 · .deb',
         file: `robrix-${RELEASE.version}-ubuntu-24.04-arm-aarch64.deb`,
         href: dl(`robrix-${RELEASE.version}-ubuntu-24.04-arm-aarch64.deb`),
-        size: '68.5 MB',
+        size: '70.0 MB',
       },
       {
         label: 'Ubuntu 22.04',
         detail: 'x86_64 · .deb',
         file: `robrix-${RELEASE.version}-ubuntu-22.04-x86_64.deb`,
         href: dl(`robrix-${RELEASE.version}-ubuntu-22.04-x86_64.deb`),
-        size: '71.0 MB',
+        size: '72.6 MB',
       },
       {
         label: 'Ubuntu 22.04',
         detail: 'aarch64 · .deb',
         file: `robrix-${RELEASE.version}-ubuntu-22.04-arm-aarch64.deb`,
         href: dl(`robrix-${RELEASE.version}-ubuntu-22.04-arm-aarch64.deb`),
-        size: '68.5 MB',
+        size: '70.0 MB',
       },
       {
         label: 'Arch Linux',
         detail: 'x86_64 · pkg.tar.zst',
         file: `robrix-${archVersion}-1-x86_64.pkg.tar.zst`,
         href: dl(`robrix-${archVersion}-1-x86_64.pkg.tar.zst`),
-        size: '66.8 MB',
+        size: '68.6 MB',
       },
       {
         label: 'Arch Linux',
         detail: 'aarch64 · pkg.tar.zst',
         file: `robrix-${archVersion}-1-aarch64.pkg.tar.zst`,
         href: dl(`robrix-${archVersion}-1-aarch64.pkg.tar.zst`),
-        size: '65.1 MB',
+        size: '66.7 MB',
       },
       {
         label: 'AppImage',
         detail: 'x86_64 · any distro',
         file: `robrix-${RELEASE.version}-x86_64.AppImage`,
         href: dl(`robrix-${RELEASE.version}-x86_64.AppImage`),
-        size: '71.0 MB',
+        size: '72.6 MB',
       },
       {
         label: 'AppImage',
         detail: 'aarch64 · any distro',
         file: `robrix-${RELEASE.version}-aarch64.AppImage`,
         href: dl(`robrix-${RELEASE.version}-aarch64.AppImage`),
-        size: '68.7 MB',
+        size: '70.1 MB',
       },
     ],
   },
@@ -209,7 +209,7 @@ export const PLATFORMS: Platform[] = [
     icon: 'tabler:brand-android',
     detect: ['android'],
     status: 'stable',
-    note: 'The package ID is now rs.robius.robrix, so this installs alongside a 1.0.0-alpha.2 build rather than over it — uninstall the old one once you are happy.',
+    note: 'Since 1.0.0-beta.1 the package ID is rs.robius.robrix, so this installs alongside an old 1.0.0-alpha.2 build rather than over it — uninstall that one once you are happy.',
     install: ['Sideload the APK — you will need to allow installing from unknown sources.'],
     files: [
       {
@@ -217,7 +217,7 @@ export const PLATFORMS: Platform[] = [
         detail: 'aarch64',
         file: `Robrix-${RELEASE.version}-android-aarch64.apk`,
         href: dl(`Robrix-${RELEASE.version}-android-aarch64.apk`),
-        size: '61.2 MB',
+        size: '61.5 MB',
         primary: true,
       },
     ],
@@ -297,14 +297,34 @@ export const FEATURES: Feature[] = [
     icon: 'tabler:shield-lock',
   },
   {
+    title: 'Key backup and recovery',
+    body: 'Back up your encryption keys with a recovery key and restore them on a new device. Robrix reminds you at launch if you have no backup yet, so your history is not lost.',
+    icon: 'tabler:key',
+  },
+  {
     title: 'Every message, tracked',
     body: 'Each message shows where it actually is: uploading, sent, queued because you are offline, or failed. Retry or cancel anything that did not make it, attachments included.',
     icon: 'tabler:checks',
   },
   {
+    title: 'Voice dictation',
+    body: 'Tap the mic in the message box and talk. Dictation uses the speech recognition built into macOS, iOS, Android and Windows, and you can keep typing while it listens.',
+    icon: 'tabler:microphone',
+  },
+  {
+    title: 'Members, pins and threads',
+    body: "A room's action bar opens panes for its members, pinned messages and threads. Resize them, move them to any side, or pop one out into its own tab.",
+    icon: 'tabler:layout-sidebar-right',
+  },
+  {
     title: 'Threads and replies',
     body: 'Threaded replies, replies into a new thread, and reply previews that expand, collapse and render full rich text.',
     icon: 'tabler:message-2-share',
+  },
+  {
+    title: 'A tidier timeline',
+    body: 'Runs of joins, leaves and profile changes fold into one short summary, even across days or months. Expand a group whenever you like, and the timeline stays where you left it.',
+    icon: 'tabler:fold',
   },
   {
     title: 'Mentions that keep up',
@@ -318,7 +338,7 @@ export const FEATURES: Feature[] = [
   },
   {
     title: 'Files and media',
-    body: 'Upload, download and share attachments, including encrypted media, with captions. PNG, JPEG, GIF, WebP, BMP, ICO, QOI and SVG.',
+    body: 'Upload, download and share attachments, including encrypted media, with captions. PNG, JPEG, GIF, WebP, BMP, ICO, QOI and SVG, in an image viewer that pinch-zooms like Android and iOS.',
     icon: 'tabler:paperclip',
   },
   {
@@ -332,8 +352,13 @@ export const FEATURES: Feature[] = [
     icon: 'tabler:eye-check',
   },
   {
+    title: 'Sign in your way',
+    body: "The login screen shows only what your homeserver supports: browser login over OAuth 2.0, legacy SSO, or a password. You can create a new account there too.",
+    icon: 'tabler:login',
+  },
+  {
     title: 'Spaces, DMs and invites',
-    body: 'Dedicated views for spaces and direct messages, keyword filters over the rooms list, accept and reject invites, and knock to join.',
+    body: "Dedicated views for spaces and direct messages, keyword filters over the rooms list, and knock to join. Invites show the room's topic and member count, and you can reject and block in one step.",
     icon: 'tabler:layout-grid',
   },
   {
@@ -351,6 +376,11 @@ export const FEATURES: Feature[] = [
     body: 'Smoothly scale the entire interface up or down on every platform with the shortcuts you already use.',
     icon: 'tabler:zoom-in',
   },
+  {
+    title: 'Faster on Linux and Android',
+    body: 'On Wayland, Robrix renders with Vulkan when a hardware driver is available and falls back to OpenGL ES when not. Screens open faster the first time, especially on Android.',
+    icon: 'tabler:bolt',
+  },
 ];
 
 export type RoadmapItem = { label: string; issue?: number };
@@ -360,14 +390,14 @@ export type RoadmapItem = { label: string; issue?: number };
  * that list says it is sorted by priority, so the order carries information and
  * must not be rearranged for looks. `issue` is the filed issue where one exists
  * — the rest are planned but untracked, and the absence is worth showing.
+ * Collapsible small events (#118) is left off: beta.2 shipped it and closed the
+ * issue, though the tracker row has not been ticked yet.
  */
 export const ROADMAP: RoadmapItem[] = [
-  { label: 'Collapsible runs of small events', issue: 118 },
   { label: 'Audio, video and GIF message events', issue: 120 },
   { label: 'Search messages within a room', issue: 122 },
   { label: 'Room browser and public room search' },
   { label: 'Room settings and info screen' },
-  { label: 'Room members pane' },
   { label: 'Moderation: ban, kick and friends' },
 ];
 

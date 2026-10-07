@@ -9,7 +9,7 @@ import { FEATURES, ROADMAP, LINKS } from '~/data/site';
     <SectionHead
       eyebrow="What it does"
       title="Ready for the conversation."
-      lede="Explore what's available in the Robrix beta, from encrypted messaging to offline access. There's more on the way, and your feedback helps shape it."
+      lede="Explore what's available in the Robrix beta, from encrypted messaging to voice dictation and offline access. There's more on the way, and your feedback helps shape it."
     />
 
     <ul class="features__dock">
@@ -114,7 +114,7 @@ import { FEATURES, ROADMAP, LINKS } from '~/data/site';
   }
 
   /* The tab strip a docked pane carries its name on. It runs a shade of phosphor
-     even at rest so the dock reads as lit rather than as twelve dark boxes. */
+     even at rest so the dock reads as lit rather than as a grid of dark boxes. */
   .features__tab {
     display: flex;
     align-items: center;
@@ -378,7 +378,7 @@ import { FEATURES, ROADMAP, LINKS } from '~/data/site';
 
   @media (min-width: 620px) {
     .features__dock {
-      /* twelve panes, so two across and three across both come out even */
+      /* eighteen panes, so two across and three across both come out even */
       grid-template-columns: repeat(2, 1fr);
     }
   }
