@@ -33,8 +33,8 @@ Node 20.3+ required.
 
 ```
 src/
-├── data/site.ts        every fact on the site — release files, features,
-│                       platforms, talks. Bump RELEASE when a version ships.
+├── data/release.json   generated GitHub release and asset metadata
+├── data/site.ts        shared release facts, platforms, features, and talks
 ├── styles/global.css   light and dark design tokens
 ├── layouts/Base.astro  head, pre-paint theme resolution, header, footer
 ├── components/
@@ -51,10 +51,20 @@ src/
 
 ## Updating for a new release
 
-1. Edit `RELEASE` in `src/data/site.ts` (version, tag, date).
-2. Check the file names in `PLATFORMS` still match the release assets, and
-   update the sizes.
-3. `npm run build`, then confirm the download links resolve.
+```sh
+npm run release:update -- v1.0.0-beta.3  # replace with the requested tag
+# Review release notes; update feature and roadmap copy in src/data/site.ts.
+npm test
+npm run check
+npm run build
+npm run release:verify
+npm run release:update -- v1.0.0-beta.3 --check
+```
+
+The updater requires GitHub CLI access and saves the exact release's metadata.
+Versions, release links, dates, and download sizes are derived automatically;
+missing advertised assets fail the build. See [the repeatable release-update
+guide](docs/release-updates.md) for sources, editorial checks, and packaging pitfalls.
 
 ## Regenerating the link-preview card
 

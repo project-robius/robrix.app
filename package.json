@@ -11,7 +11,10 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "astro check"
+    "check": "astro check",
+    "release:update": "node scripts/update-release.mjs",
+    "release:verify": "node scripts/verify-release.mjs",
+    "test": "node --test scripts/*.test.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",

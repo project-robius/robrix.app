@@ -1,8 +1,20 @@
 /**
  * Every fact on this site comes from the Robrix repository, its README, or the
- * v1.0.0-beta.2 release. Keep it that way — no invented benchmarks, no fake
- * testimonials. When a new release ships, RELEASE is the only thing to bump.
+ * release pinned in release.json. Keep it that way — no invented benchmarks,
+ * no fake testimonials. See docs/release-updates.md when a new release ships.
  */
+
+import release from './release.json';
+
+export const RELEASE = {
+  version: release.tag.replace(/^v/, ''),
+  tag: release.tag,
+  date: release.publishedAt.slice(0, 10),
+  dateLabel: new Intl.DateTimeFormat('en-US', {
+    month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC',
+  }).format(new Date(release.publishedAt)),
+  base: `https://github.com/project-robius/robrix/releases/download/${release.tag}`,
+} as const;
 
 export const SITE = {
   name: 'Robrix',
@@ -16,7 +28,7 @@ export const SITE = {
 export const LINKS = {
   github: 'https://github.com/project-robius/robrix',
   releases: 'https://github.com/project-robius/robrix/releases',
-  latestRelease: 'https://github.com/project-robius/robrix/releases/tag/v1.0.0-beta.2',
+  latestRelease: release.url,
   issues: 'https://github.com/project-robius/robrix/issues',
   license: 'https://github.com/project-robius/robrix/blob/main/LICENSE-MIT',
   matrixRoom: 'https://matrix.to/#/#robius-robrix:matrix.org',
@@ -35,18 +47,13 @@ export const REPO = {
   license: 'MIT',
 } as const;
 
-export const RELEASE = {
-  version: '1.0.0-beta.2',
-  tag: 'v1.0.0-beta.2',
-  date: '2026-10-07',
-  dateLabel: 'October 2026',
-  base: 'https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.2',
-} as const;
+const download = (file: string) => {
+  const asset = release.assets.find((asset) => asset.name === file);
+  if (!asset) throw new Error(`Missing published asset for ${RELEASE.tag}: ${file}. See docs/release-updates.md.`);
+  return { file, href: asset.url, size: `${(asset.size / 1_000_000).toFixed(1)} MB` };
+};
 
-const dl = (file: string) => `${RELEASE.base}/${file}`;
-
-/* The Arch package drops the hyphen out of the version: 1.0.0-beta.2 becomes
-   1.0.0beta.2. Derived rather than written out so RELEASE stays the only bump. */
+/* Arch package versions omit the prerelease hyphen. */
 const archVersion = RELEASE.version.replace('-', '');
 
 export type DownloadFile = {
@@ -82,17 +89,13 @@ export const PLATFORMS: Platform[] = [
       {
         label: 'Apple Silicon',
         detail: 'M1 and later',
-        file: `Robrix_${RELEASE.version}_aarch64.dmg`,
-        href: dl(`Robrix_${RELEASE.version}_aarch64.dmg`),
-        size: '70.4 MB',
+        ...download(`Robrix_${RELEASE.version}_aarch64.dmg`),
         primary: true,
       },
       {
         label: 'Intel',
         detail: 'x86_64',
-        file: `Robrix_${RELEASE.version}_x64.dmg`,
-        href: dl(`Robrix_${RELEASE.version}_x64.dmg`),
-        size: '73.5 MB',
+        ...download(`Robrix_${RELEASE.version}_x64.dmg`),
       },
     ],
   },
@@ -108,9 +111,7 @@ export const PLATFORMS: Platform[] = [
       {
         label: 'Installer',
         detail: 'x86_64',
-        file: `robrix-${RELEASE.version}-windows-x86_64.exe`,
-        href: dl(`robrix-${RELEASE.version}-windows-x86_64.exe`),
-        size: '54.2 MB',
+        ...download(`robrix-${RELEASE.version}-windows-x86_64.exe`),
         primary: true,
       },
     ],
@@ -131,59 +132,43 @@ export const PLATFORMS: Platform[] = [
       {
         label: 'Ubuntu 24.04+',
         detail: 'x86_64 · .deb',
-        file: `robrix-${RELEASE.version}-ubuntu-24.04-x86_64.deb`,
-        href: dl(`robrix-${RELEASE.version}-ubuntu-24.04-x86_64.deb`),
-        size: '72.6 MB',
+        ...download(`robrix-${RELEASE.version}-ubuntu-24.04-x86_64.deb`),
         primary: true,
       },
       {
         label: 'Ubuntu 24.04+',
         detail: 'aarch64 · .deb',
-        file: `robrix-${RELEASE.version}-ubuntu-24.04-arm-aarch64.deb`,
-        href: dl(`robrix-${RELEASE.version}-ubuntu-24.04-arm-aarch64.deb`),
-        size: '70.0 MB',
+        ...download(`robrix-${RELEASE.version}-ubuntu-24.04-arm-aarch64.deb`),
       },
       {
         label: 'Ubuntu 22.04',
         detail: 'x86_64 · .deb',
-        file: `robrix-${RELEASE.version}-ubuntu-22.04-x86_64.deb`,
-        href: dl(`robrix-${RELEASE.version}-ubuntu-22.04-x86_64.deb`),
-        size: '72.6 MB',
+        ...download(`robrix-${RELEASE.version}-ubuntu-22.04-x86_64.deb`),
       },
       {
         label: 'Ubuntu 22.04',
         detail: 'aarch64 · .deb',
-        file: `robrix-${RELEASE.version}-ubuntu-22.04-arm-aarch64.deb`,
-        href: dl(`robrix-${RELEASE.version}-ubuntu-22.04-arm-aarch64.deb`),
-        size: '70.0 MB',
+        ...download(`robrix-${RELEASE.version}-ubuntu-22.04-arm-aarch64.deb`),
       },
       {
         label: 'Arch Linux',
         detail: 'x86_64 · pkg.tar.zst',
-        file: `robrix-${archVersion}-1-x86_64.pkg.tar.zst`,
-        href: dl(`robrix-${archVersion}-1-x86_64.pkg.tar.zst`),
-        size: '68.6 MB',
+        ...download(`robrix-${archVersion}-1-x86_64.pkg.tar.zst`),
       },
       {
         label: 'Arch Linux',
         detail: 'aarch64 · pkg.tar.zst',
-        file: `robrix-${archVersion}-1-aarch64.pkg.tar.zst`,
-        href: dl(`robrix-${archVersion}-1-aarch64.pkg.tar.zst`),
-        size: '66.7 MB',
+        ...download(`robrix-${archVersion}-1-aarch64.pkg.tar.zst`),
       },
       {
         label: 'AppImage',
         detail: 'x86_64 · any distro',
-        file: `robrix-${RELEASE.version}-x86_64.AppImage`,
-        href: dl(`robrix-${RELEASE.version}-x86_64.AppImage`),
-        size: '72.6 MB',
+        ...download(`robrix-${RELEASE.version}-x86_64.AppImage`),
       },
       {
         label: 'AppImage',
         detail: 'aarch64 · any distro',
-        file: `robrix-${RELEASE.version}-aarch64.AppImage`,
-        href: dl(`robrix-${RELEASE.version}-aarch64.AppImage`),
-        size: '70.1 MB',
+        ...download(`robrix-${RELEASE.version}-aarch64.AppImage`),
       },
     ],
   },
@@ -215,9 +200,7 @@ export const PLATFORMS: Platform[] = [
       {
         label: 'APK',
         detail: 'aarch64',
-        file: `Robrix-${RELEASE.version}-android-aarch64.apk`,
-        href: dl(`Robrix-${RELEASE.version}-android-aarch64.apk`),
-        size: '61.5 MB',
+        ...download(`Robrix-${RELEASE.version}-android-aarch64.apk`),
         primary: true,
       },
     ],
@@ -292,6 +275,21 @@ export const SIGNATURE: Feature[] = [
 
 export const FEATURES: Feature[] = [
   {
+    title: 'Back, forward and history',
+    body: 'Go back and forward through rooms, threads and spaces with the title-bar buttons or your mouse. Press and hold a navigation button to jump to a place in your history.',
+    icon: 'tabler:history',
+  },
+  {
+    title: 'Swipe to go back',
+    body: "Swipe right to return to the previous screen on mobile, or use Android's back gesture. The screen follows your finger as you swipe.",
+    icon: 'tabler:hand-move',
+  },
+  {
+    title: 'Matrix links open in Robrix',
+    body: 'Open links to rooms, messages, threads and spaces directly in the app, so you can follow a conversation without leaving Robrix.',
+    icon: 'tabler:link',
+  },
+  {
     title: 'End-to-end encryption',
     body: 'Device verification in one click from Account Settings, encrypted media, and a send button that tells you whether the room is encrypted.',
     icon: 'tabler:shield-lock',
@@ -338,7 +336,7 @@ export const FEATURES: Feature[] = [
   },
   {
     title: 'Files and media',
-    body: 'Upload, download and share attachments, including encrypted media, with captions. PNG, JPEG, GIF, WebP, BMP, ICO, QOI and SVG, in an image viewer that pinch-zooms like Android and iOS.',
+    body: 'Upload, download and share attachments, including encrypted media, with captions. Animated GIFs, WebP, APNG and stickers play in the timeline. A redesigned image viewer puts metadata and controls in floating overlays, with pinch-to-zoom.',
     icon: 'tabler:paperclip',
   },
   {
@@ -367,6 +365,11 @@ export const FEATURES: Feature[] = [
     icon: 'tabler:keyboard',
   },
   {
+    title: 'Cleaner message formatting',
+    body: 'Paragraphs, lists and quotes use consistent spacing. Narrower timestamp columns leave more room for messages on small screens, and reactions can use the full timeline width.',
+    icon: 'tabler:align-left',
+  },
+  {
     title: 'Scrolling that feels right',
     body: 'Kinetic movement, correct acceleration and bounce on touch and trackpad — tuned to match the native apps on each platform.',
     icon: 'tabler:hand-move',
@@ -390,11 +393,11 @@ export type RoadmapItem = { label: string; issue?: number };
  * that list says it is sorted by priority, so the order carries information and
  * must not be rearranged for looks. `issue` is the filed issue where one exists
  * — the rest are planned but untracked, and the absence is worth showing.
- * Collapsible small events (#118) is left off: beta.2 shipped it and closed the
- * issue, though the tracker row has not been ticked yet.
+ * Animated images and GIFs are shipped; audio/video message support is still
+ * unfinished. Keep that distinction when reviewing future releases.
  */
 export const ROADMAP: RoadmapItem[] = [
-  { label: 'Audio, video and GIF message events', issue: 120 },
+  { label: 'Audio and video message events', issue: 120 },
   { label: 'Search messages within a room', issue: 122 },
   { label: 'Room browser and public room search' },
   { label: 'Room settings and info screen' },

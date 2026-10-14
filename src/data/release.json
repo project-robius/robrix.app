@@ -1,0 +1,82 @@
+{
+  "tag": "v1.0.0-beta.3",
+  "publishedAt": "2026-10-12T22:45:50Z",
+  "url": "https://github.com/project-robius/robrix/releases/tag/v1.0.0-beta.3",
+  "assets": [
+    {
+      "name": "Robrix-1.0.0-beta.3-android-aarch64.apk",
+      "size": 64655916,
+      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.3/Robrix-1.0.0-beta.3-android-aarch64.apk"
+    },
+    {
+      "name": "Robrix_1.0.0-beta.3_aarch64.dmg",
+      "size": 74022698,
+      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.3/Robrix_1.0.0-beta.3_aarch64.dmg"
+    },
+    {
+      "name": "Robrix_1.0.0-beta.3_x64.dmg",
+      "size": 77258519,
+      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.3/Robrix_1.0.0-beta.3_x64.dmg"
+    },
+    {
+      "name": "robrix-1.0.0-beta.3-aarch64.AppImage",
+      "size": 73660936,
+      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.3/robrix-1.0.0-beta.3-aarch64.AppImage"
+    },
+    {
+      "name": "robrix-1.0.0-beta.3-ios-aarch64.ipa",
+      "size": 63909803,
+      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.3/robrix-1.0.0-beta.3-ios-aarch64.ipa"
+    },
+    {
+      "name": "robrix-1.0.0-beta.3-ubuntu-22.04-arm-aarch64.deb",
+      "size": 73562556,
+      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.3/robrix-1.0.0-beta.3-ubuntu-22.04-arm-aarch64.deb"
+    },
+    {
+      "name": "robrix-1.0.0-beta.3-ubuntu-22.04-x86_64.deb",
+      "size": 76325956,
+      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.3/robrix-1.0.0-beta.3-ubuntu-22.04-x86_64.deb"
+    },
+    {
+      "name": "robrix-1.0.0-beta.3-ubuntu-24.04-arm-aarch64.deb",
+      "size": 73574926,
+      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.3/robrix-1.0.0-beta.3-ubuntu-24.04-arm-aarch64.deb"
+    },
+    {
+      "name": "robrix-1.0.0-beta.3-ubuntu-24.04-x86_64.deb",
+      "size": 76341340,
+      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.3/robrix-1.0.0-beta.3-ubuntu-24.04-x86_64.deb"
+    },
+    {
+      "name": "robrix-1.0.0-beta.3-windows-x86_64.exe",
+      "size": 56971166,
+      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.3/robrix-1.0.0-beta.3-windows-x86_64.exe"
+    },
+    {
+      "name": "robrix-1.0.0-beta.3-x86_64.AppImage",
+      "size": 76298744,
+      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.3/robrix-1.0.0-beta.3-x86_64.AppImage"
+    },
+    {
+      "name": "robrix-1.0.0beta.3-1-aarch64.pkg.tar.zst",
+      "size": 70105270,
+      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.3/robrix-1.0.0beta.3-1-aarch64.pkg.tar.zst"
+    },
+    {
+      "name": "robrix-1.0.0beta.3-1-x86_64.pkg.tar.zst",
+      "size": 72309214,
+      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.3/robrix-1.0.0beta.3-1-x86_64.pkg.tar.zst"
+    },
+    {
+      "name": "robrix_1.0.0-beta.3_aarch64.tar.gz",
+      "size": 73558010,
+      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.3/robrix_1.0.0-beta.3_aarch64.tar.gz"
+    },
+    {
+      "name": "robrix_1.0.0-beta.3_x86_64.tar.gz",
+      "size": 76323261,
+      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.3/robrix_1.0.0-beta.3_x86_64.tar.gz"
+    }
+  ]
+}
