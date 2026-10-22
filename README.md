@@ -52,13 +52,13 @@ src/
 ## Updating for a new release
 
 ```sh
-npm run release:update -- v1.0.0-beta.3  # replace with the requested tag
+npm run release:update -- v1.0.0-beta.4  # replace with the requested tag
 # Review release notes; update feature and roadmap copy in src/data/site.ts.
 npm test
 npm run check
 npm run build
 npm run release:verify
-npm run release:update -- v1.0.0-beta.3 --check
+npm run release:update -- v1.0.0-beta.4 --check
 ```
 
 The updater requires GitHub CLI access and saves the exact release's metadata.

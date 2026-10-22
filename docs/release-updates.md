@@ -11,20 +11,20 @@ working GitHub CLI (`gh auth status`). Replace the example tag with the requeste
 release, including its leading `v`.
 
 ```sh
-npm run release:update -- v1.0.0-beta.3
-gh release view v1.0.0-beta.3 --repo project-robius/robrix
+npm run release:update -- v1.0.0-beta.4
+gh release view v1.0.0-beta.4 --repo project-robius/robrix
 ```
 
 Review the release notes and the **README at that tag**, then adjust feature and
 roadmap copy in `src/data/site.ts`. The tagged README is at:
-`https://github.com/project-robius/robrix/blob/v1.0.0-beta.3/README.md`.
+`https://github.com/project-robius/robrix/blob/v1.0.0-beta.4/README.md`.
 
 ```sh
 npm test
 npm run check
 npm run build
 npm run release:verify
-npm run release:update -- v1.0.0-beta.3 --check
+npm run release:update -- v1.0.0-beta.4 --check
 git diff --check
 git status --short
 git diff
@@ -79,6 +79,12 @@ complete filename/size inventory; avoid checking each large binary individually.
    a version label. The preview-card artwork is version-neutral; regenerate it
    only when artwork or its text changes.
 
+App features and website features are separate. For example, beta.4 adds manual
+light/dark switching in the app, while automatic system-theme switching is still
+planned. The website's existing System theme option does not imply the app has it.
+Keep old release tags in historical records, migration notes, and test fixtures;
+update current metadata and runnable documentation examples.
+
 For a visual spot check, run `npm run dev` and inspect `/`, `/download`,
 `/presentations`, `/privacy`, and `/404` (or preview `/404.html`). On download,
 check all five platform cards, release notes, TestFlight, and the highlighted
@@ -111,6 +117,21 @@ commit.
 - The current Astro config names an optional `src/icons` directory that does not
   exist. A build may warn about it; packaged Iconify icons still render. This is
   unrelated to release metadata.
+
+## Beta.4 record
+
+Verified release: [v1.0.0-beta.4](https://github.com/project-robius/robrix/releases/tag/v1.0.0-beta.4),
+published `2026-10-21T10:30:22Z`. The existing updater handles all fifteen assets
+with the same filename templates: twelve direct downloads, one IPA, and two AUR
+tarballs. TestFlight and the five unfinished roadmap items are unchanged from
+the tagged README. No new automation or filename changes were necessary.
+
+Updated feature copy for instant, persistent light/dark theme switching,
+Android folding/resizing/split-screen continuity, timeline position retention
+on rotation and theme changes, and touch scrolling in dialogs. The iOS download
+note records the iOS 27 text-input crash fix. Automatic app system-theme switching
+is still planned. The expired conference announcement already hides itself after
+the event; no new recording or schedule was supplied by this release.
 
 ## Beta.3 record
 

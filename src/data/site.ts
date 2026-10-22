@@ -178,7 +178,7 @@ export const PLATFORMS: Platform[] = [
     icon: 'tabler:device-mobile',
     detect: ['iphone', 'ipad', 'ipod'],
     status: 'stable',
-    note: 'Distributed through TestFlight while Robrix is in beta.',
+    note: 'Distributed through TestFlight while Robrix is in beta. This release fixes a text-input crash on iOS 27.',
     files: [
       {
         label: 'TestFlight beta',
@@ -263,7 +263,7 @@ export const SIGNATURE: Feature[] = [
   },
   {
     title: 'A timeline that stays put',
-    body: 'Keep your place in a conversation while older messages, images, and previews load around you.',
+    body: 'Keep your place in a conversation while older messages, images, and previews load around you — even when you rotate your phone or switch themes.',
     icon: 'tabler:arrow-autofit-height',
   },
   {
@@ -274,6 +274,16 @@ export const SIGNATURE: Feature[] = [
 ];
 
 export const FEATURES: Feature[] = [
+  {
+    title: 'Light and dark themes',
+    body: 'Choose light or dark mode in Settings → Appearance. The theme changes instantly without restarting Robrix, and your choice is remembered the next time you open the app.',
+    icon: 'tabler:moon',
+  },
+  {
+    title: 'Android adapts with you',
+    body: 'Fold or unfold your phone, resize Robrix, or enter and leave split-screen without restarting the app or losing your place.',
+    icon: 'tabler:device-mobile',
+  },
   {
     title: 'Back, forward and history',
     body: 'Go back and forward through rooms, threads and spaces with the title-bar buttons or your mouse. Press and hold a navigation button to jump to a place in your history.',
@@ -371,7 +381,7 @@ export const FEATURES: Feature[] = [
   },
   {
     title: 'Scrolling that feels right',
-    body: 'Kinetic movement, correct acceleration and bounce on touch and trackpad — tuned to match the native apps on each platform.',
+    body: 'Kinetic movement, correct acceleration and bounce on touch and trackpad — tuned to match the native apps on each platform. Touch scrolling also works inside dialogs, including View Event Source.',
     icon: 'tabler:hand-move',
   },
   {

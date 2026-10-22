@@ -1,5 +1,22 @@
 # Release update plan
 
+## Beta.4 update — October 22, 2026
+
+- [x] Identify latest published release and read saved workflow.
+- [x] Review beta.4 release notes and asset inventory.
+- [x] Fetch pinned metadata with the existing updater.
+- [x] Review tagged README; update feature, platform, and stale current references.
+- [x] Update reusable notes and examples for beta.4.
+- [x] Run tests, type checking, build, generated-page verification, and GitHub metadata comparison.
+
+Completed: five tests pass; Astro check reports zero errors/warnings/hints;
+build succeeds; all five pages and twelve download links/sizes verify. No beta.3
+references remain in src/public; test fixtures and historical notes are retained.
+
+Preserve the pre-existing untracked design document. No deployment requested.
+
+## Beta.3 update history
+
 Goal: update every current release reference to beta.3 and make future updates fast and repeatable.
 
 - [x] Inspect site structure and verify beta.3 metadata and asset inventory.
