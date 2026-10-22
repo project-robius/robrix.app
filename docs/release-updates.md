@@ -6,7 +6,7 @@ explicit release so builds work offline and do not silently switch versions.
 
 ## Fast path
 
-Run from the repository root with Node and dependencies installed, plus a
+Run from the repository root with Node 22.23.4+ and dependencies installed, plus a
 working GitHub CLI (`gh auth status`). Replace the example tag with the requested
 release, including its leading `v`.
 

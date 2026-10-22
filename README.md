@@ -27,7 +27,8 @@ npm run preview
 npm run check    # astro type check
 ```
 
-Node 20.3+ required.
+Node 22.23.4+ required (matching Astro's minimum). Older Node 22 releases,
+including 22.16.0, cannot run the current Astro CLI.
 
 ## Layout
 
