@@ -100,6 +100,11 @@ commit.
 
 ## Pitfalls and troubleshooting
 
+- After updating Astro or other dependencies, check their Node requirements
+  against `package.json` and `.github/workflows/deploy.yml`. Keep the workflow
+  pinned to a supported patch version: `node-version: 22` selected cached
+  22.23.3 in run 39767759900, which failed because Astro required 22.23.4.
+  Validate with the exact CI Node version before committing dependency updates.
 - Do not rely on GitHub's `/releases/latest`: prerelease filtering and the
   repository's release flags can make it point to an unintended release.
   Always pass the requested tag, and review a newer release before choosing it.

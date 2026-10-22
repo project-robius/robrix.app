@@ -25,7 +25,8 @@ jobs:
       - uses: actions/checkout@v7
       - uses: withastro/action@v6
         with:
-          node-version: 22
+          # A major-only version can select a cached patch below Astro's minimum.
+          node-version: '22.23.4'
 
   deploy:
     needs: build
