@@ -178,7 +178,7 @@ export const PLATFORMS: Platform[] = [
     icon: 'tabler:device-mobile',
     detect: ['iphone', 'ipad', 'ipod'],
     status: 'stable',
-    note: 'Distributed through TestFlight while Robrix is in beta. This release fixes a text-input crash on iOS 27.',
+    note: 'Distributed through TestFlight while Robrix is in beta.',
     files: [
       {
         label: 'TestFlight beta',
@@ -202,6 +202,11 @@ export const PLATFORMS: Platform[] = [
         detail: 'aarch64',
         ...download(`Robrix-${RELEASE.version}-android-aarch64.apk`),
         primary: true,
+      },
+      {
+        label: 'APK',
+        detail: 'armv7 · 32-bit devices',
+        ...download(`Robrix-${RELEASE.version}-android-armv7.apk`),
       },
     ],
   },
