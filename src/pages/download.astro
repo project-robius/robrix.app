@@ -2,7 +2,7 @@
 import { Icon } from 'astro-icon/components';
 import Base from '~/layouts/Base.astro';
 import SectionHead from '~/components/SectionHead.astro';
-import { PLATFORMS, DOWNLOAD_COLUMNS, RELEASE, LINKS } from '~/data/site';
+import { PLATFORMS, DOWNLOAD_COLUMNS, HIGHLIGHTS, RELEASE, LINKS } from '~/data/site';
 
 const byId = new Map(PLATFORMS.map((p) => [p.id, p]));
 const columns = DOWNLOAD_COLUMNS.map((ids) => ids.map((id) => byId.get(id)!).filter(Boolean));
@@ -88,6 +88,27 @@ const columns = DOWNLOAD_COLUMNS.map((ids) => ids.map((id) => byId.get(id)!).fil
             </div>
           ))
         }
+      </div>
+
+      <div class="dl-highlights">
+        <p class="u-label">Highlights from this release</p>
+        <ul class="dl-highlights__list">
+          {
+            HIGHLIGHTS.map((h) => (
+              <li class="dl-highlight">
+                <Icon name={h.icon} width="20" height="20" />
+                <div>
+                  <h3>{h.title}</h3>
+                  <p>{h.body}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+        <a class="u-btn u-btn--ghost" href={LINKS.latestRelease} target="_blank" rel="noopener noreferrer">
+          <Icon name="tabler:notes" width="16" height="16" />
+          Read the full release notes
+        </a>
       </div>
 
       <div class="dl-extra">
@@ -402,6 +423,64 @@ const columns = DOWNLOAD_COLUMNS.map((ids) => ids.map((id) => byId.get(id)!).fil
     font-size: 0.8125rem;
     font-weight: 300;
     color: var(--w-dim);
+  }
+
+  .dl-highlights {
+    margin-top: clamp(3rem, 6vw, 4.5rem);
+    padding-top: clamp(2.5rem, 5vw, 3.5rem);
+    border-top: 1px solid var(--w-line);
+  }
+
+  .dl-highlights__list {
+    list-style: none;
+    margin: 1.25rem 0 1.75rem;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr;
+  }
+
+  .dl-highlight {
+    display: flex;
+    gap: 0.875rem;
+    align-items: flex-start;
+    background: var(--w-raised);
+    border: 1px solid var(--w-line);
+    border-radius: 6px;
+    padding: 1.125rem;
+  }
+
+  .dl-highlight :global(svg) {
+    flex: none;
+    margin-top: 0.125rem;
+    color: var(--w-phos);
+  }
+
+  .dl-highlight h3 {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--w-text);
+    margin: 0 0 0.25rem;
+  }
+
+  .dl-highlight p {
+    font-size: 0.875rem;
+    font-weight: 300;
+    line-height: 1.55;
+    color: var(--w-dim);
+    margin: 0;
+  }
+
+  @media (min-width: 44rem) {
+    .dl-highlights__list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 66rem) {
+    .dl-highlights__list {
+      grid-template-columns: repeat(4, 1fr);
+    }
   }
 
   .dl-extra {
