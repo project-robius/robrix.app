@@ -203,6 +203,11 @@ export const PLATFORMS: Platform[] = [
         ...download(`Robrix-${RELEASE.version}-android-aarch64.apk`),
         primary: true,
       },
+      {
+        label: 'APK',
+        detail: 'armv7 · 32-bit devices',
+        ...download(`Robrix-${RELEASE.version}-android-armv7.apk`),
+      },
     ],
   },
 ];
