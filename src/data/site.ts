@@ -178,7 +178,7 @@ export const PLATFORMS: Platform[] = [
     icon: 'tabler:device-mobile',
     detect: ['iphone', 'ipad', 'ipod'],
     status: 'stable',
-    note: 'Distributed through TestFlight while Robrix is in beta. This release fixes a text-input crash on iOS 27.',
+    note: 'Distributed through TestFlight while Robrix is in beta.',
     files: [
       {
         label: 'TestFlight beta',
