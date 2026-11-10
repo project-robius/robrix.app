@@ -35,6 +35,30 @@ const columns = DOWNLOAD_COLUMNS.map((ids) => ids.map((id) => byId.get(id)!).fil
 
   <section class="u-section dl-body">
     <div class="u-shell">
+      <details class="dl-highlights" open>
+        <summary class="dl-highlights__summary">
+          <span class="u-label">Highlights from this release</span>
+          <Icon name="tabler:chevron-down" width="16" height="16" />
+        </summary>
+        <ul class="dl-highlights__list">
+          {
+            HIGHLIGHTS.map((h) => (
+              <li class="dl-highlight">
+                <Icon name={h.icon} width="20" height="20" />
+                <div>
+                  <h3>{h.title}</h3>
+                  <p>{h.body}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+        <a class="u-btn u-btn--ghost" href={LINKS.latestRelease} target="_blank" rel="noopener noreferrer">
+          <Icon name="tabler:notes" width="16" height="16" />
+          Read the full release notes
+        </a>
+      </details>
+
       <div class="dl-grid">
         {
           columns.map((column) => (
@@ -88,27 +112,6 @@ const columns = DOWNLOAD_COLUMNS.map((ids) => ids.map((id) => byId.get(id)!).fil
             </div>
           ))
         }
-      </div>
-
-      <div class="dl-highlights">
-        <p class="u-label">Highlights from this release</p>
-        <ul class="dl-highlights__list">
-          {
-            HIGHLIGHTS.map((h) => (
-              <li class="dl-highlight">
-                <Icon name={h.icon} width="20" height="20" />
-                <div>
-                  <h3>{h.title}</h3>
-                  <p>{h.body}</p>
-                </div>
-              </li>
-            ))
-          }
-        </ul>
-        <a class="u-btn u-btn--ghost" href={LINKS.latestRelease} target="_blank" rel="noopener noreferrer">
-          <Icon name="tabler:notes" width="16" height="16" />
-          Read the full release notes
-        </a>
       </div>
 
       <div class="dl-extra">
@@ -426,9 +429,30 @@ const columns = DOWNLOAD_COLUMNS.map((ids) => ids.map((id) => byId.get(id)!).fil
   }
 
   .dl-highlights {
-    margin-top: clamp(3rem, 6vw, 4.5rem);
-    padding-top: clamp(2.5rem, 5vw, 3.5rem);
-    border-top: 1px solid var(--w-line);
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+  }
+
+  .dl-highlights__summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    cursor: pointer;
+    list-style: none;
+    color: var(--w-dim);
+  }
+
+  .dl-highlights__summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .dl-highlights__summary :global(svg) {
+    flex: none;
+    transition: transform 0.2s ease;
+  }
+
+  .dl-highlights[open] .dl-highlights__summary :global(svg) {
+    transform: rotate(180deg);
   }
 
   .dl-highlights__list {
@@ -545,6 +569,13 @@ const columns = DOWNLOAD_COLUMNS.map((ids) => ids.map((id) => byId.get(id)!).fil
         break;
       }
     }
+  }
+
+  /* The highlights sit above the downloads, so on a phone start them collapsed
+     rather than push the visitor's own platform several screens down. Desktop,
+     and anyone without JavaScript, gets them open. */
+  if (window.matchMedia('(max-width: 43.999rem)').matches) {
+    document.querySelector('.dl-highlights')?.removeAttribute('open');
   }
 
   if (found) {
