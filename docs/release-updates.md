@@ -101,6 +101,26 @@ live homepage and download page show the selected tag. Local verification does
 not publish the website. Keep unrelated workspace changes out of the release
 commit.
 
+## Automatic update pull requests
+
+`.github/workflows/update-release.yml` runs once a day, and on demand from the
+Actions tab. When GitHub's latest Robrix release is newer than the one pinned in
+`src/data/release.json`, it runs the same steps as the fast path (update, test,
+check, build, `release:verify`) and opens a `release/<tag>` pull request with the
+refreshed snapshot. It never merges anything, and it leaves the site alone when
+the latest release is the pinned one, is older than it, or already has a branch.
+
+The pull request is only the mechanical half. Before merging, replace
+`HIGHLIGHTS`, review feature and roadmap copy, and look at the assets the
+verifier lists as not advertised. If the build fails, for example because an
+advertised installer is missing, the run fails instead of guessing; check the
+Actions tab. The workflow follows GitHub's "latest" flag, so a release marked as
+a prerelease is not picked up until it is promoted (or updated by hand).
+
+For it to open pull requests, the repository setting Settings → Actions →
+General → "Allow GitHub Actions to create and approve pull requests" must be on.
+Without it the release branch is still pushed, but the last step fails.
+
 ## Pitfalls and troubleshooting
 
 - After updating Astro or other dependencies, check their Node requirements

@@ -1,0 +1,102 @@
+name: Update release
+
+# Once a day, check GitHub's latest Robrix release. When it is newer than the one
+# pinned in src/data/release.json, open a pull request that refreshes the snapshot.
+# Nothing is merged automatically: a person still replaces HIGHLIGHTS and reviews
+# the feature copy before merging (see docs/release-updates.md).
+
+on:
+  schedule:
+    - cron: '17 9 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: update-release
+  cancel-in-progress: false
+
+jobs:
+  update:
+    if: github.repository == 'project-robius/robrix.app'
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Find the latest release
+        id: latest
+        run: |
+          release=$(gh api repos/project-robius/robrix/releases/latest)
+          latest=$(jq -r .tag_name <<<"$release")
+          latest_at=$(jq -r .published_at <<<"$release")
+          current=$(jq -r .tag src/data/release.json)
+          current_at=$(jq -r .publishedAt src/data/release.json)
+          echo "GitHub latest: $latest ($latest_at); site is pinned to $current ($current_at)"
+          if [ "$latest" = "$current" ]; then
+            echo "The site is already on $current."
+            echo "new=false" >> "$GITHUB_OUTPUT"
+          elif [[ ! "$latest_at" > "$current_at" ]]; then
+            echo "GitHub's latest release is not newer than the pinned one; leaving the site alone."
+            echo "new=false" >> "$GITHUB_OUTPUT"
+          elif git ls-remote --exit-code --heads origin "release/$latest" >/dev/null 2>&1; then
+            echo "Branch release/$latest already exists; leaving it for review."
+            echo "new=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "new=true" >> "$GITHUB_OUTPUT"
+            echo "tag=$latest" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/setup-node@v6
+        if: steps.latest.outputs.new == 'true'
+        with:
+          # Keep in step with deploy.yml and package.json (Astro's minimum patch).
+          node-version: '22.23.4'
+          cache: npm
+
+      - name: Refresh the snapshot and verify the site
+        if: steps.latest.outputs.new == 'true'
+        env:
+          TAG: ${{ steps.latest.outputs.tag }}
+        run: |
+          npm ci
+          npm run release:update -- "$TAG"
+          npm test
+          npm run check
+          npm run build
+          npm run release:verify | tee "$RUNNER_TEMP/verify.txt"
+
+      - name: Open a pull request
+        if: steps.latest.outputs.new == 'true'
+        env:
+          TAG: ${{ steps.latest.outputs.tag }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "release/$TAG"
+          git add src/data/release.json
+          git commit -m "Update site to Robrix $TAG"
+          git push -u origin "release/$TAG"
+          cat > "$RUNNER_TEMP/body.md" <<BODY
+          Robrix $TAG is now GitHub's latest release. This refreshes \`src/data/release.json\`
+          (tag, publish time, asset names, sizes and URLs), which drives the version label,
+          download links and sizes. Tests, type check, build and \`npm run release:verify\` pass.
+
+          **Before merging** (see \`docs/release-updates.md\`):
+          - [ ] Replace \`HIGHLIGHTS\` in \`src/data/site.ts\` with this release's highlights
+          - [ ] Update feature and roadmap copy and platform notes if the release changed them
+          - [ ] Look at the assets not advertised as downloads, listed below
+
+          Release notes: https://github.com/project-robius/robrix/releases/tag/$TAG
+
+          \`\`\`
+          $(cat "$RUNNER_TEMP/verify.txt")
+          \`\`\`
+
+          Merging to \`main\` deploys the site.
+          BODY
+          gh pr create --base main --head "release/$TAG" \
+            --title "Update site to Robrix $TAG" --body-file "$RUNNER_TEMP/body.md"
