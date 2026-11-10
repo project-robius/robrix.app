@@ -28,7 +28,9 @@ export const SITE = {
 export const LINKS = {
   github: 'https://github.com/project-robius/robrix',
   releases: 'https://github.com/project-robius/robrix/releases',
-  latestRelease: release.url,
+  // Deliberately floats: GitHub's "latest" page, so the release-notes links never go stale.
+  // Everything else about the release (version, downloads, sizes, highlights) stays pinned to release.json.
+  latestRelease: 'https://github.com/project-robius/robrix/releases/latest',
   issues: 'https://github.com/project-robius/robrix/issues',
   license: 'https://github.com/project-robius/robrix/blob/main/LICENSE-MIT',
   matrixRoom: 'https://matrix.to/#/#robius-robrix:matrix.org',
@@ -280,7 +282,7 @@ export const SIGNATURE: Feature[] = [
 
 /**
  * "Highlights from this release" on the download page. Summarised from the
- * highlights on the pinned release's notes page (LINKS.latestRelease), and
+ * highlights on the pinned release's notes page, and
  * replaced wholesale each time release.json moves to a new tag.
  */
 export const HIGHLIGHTS: Feature[] = [

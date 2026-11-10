@@ -108,9 +108,13 @@ commit.
   pinned to a supported patch version: `node-version: 22` selected cached
   22.23.3 in run 39767759900, which failed because Astro required 22.23.4.
   Validate with the exact CI Node version before committing dependency updates.
-- Do not rely on GitHub's `/releases/latest`: prerelease filtering and the
-  repository's release flags can make it point to an unintended release.
-  Always pass the requested tag, and review a newer release before choosing it.
+- Do not rely on GitHub's `/releases/latest` to choose what the site pins:
+  prerelease filtering and the repository's release flags can make it point to an
+  unintended release. Always pass the requested tag, and review a newer release
+  before choosing it. The one deliberate use is `LINKS.latestRelease`, the
+  "Release notes" links on the download page, which float so they never point at
+  an old tag. Once a newer release ships they show its notes, while the version,
+  downloads, sizes and `HIGHLIGHTS` stay pinned until the site is updated.
 - Filename casing matters: macOS uses `Robrix_…`, Android uses `Robrix-…`, and
   most other assets use `robrix-…`. Arch omits the prerelease hyphen, e.g.
   `1.0.0-beta.3` becomes `1.0.0beta.3`.
