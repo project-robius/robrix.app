@@ -60,6 +60,9 @@ complete filename/size inventory; avoid checking each large binary individually.
 1. Read the highlights and installation notes on the exact release page.
    Compare against the previous release; summarize user-visible changes in
    `FEATURES` and, when relevant, `SIGNATURE`, platform notes, and install steps.
+   Replace `HIGHLIGHTS` (the "Highlights from this release" block on the download
+   page) with a short summary of the new release's own highlights; it is not
+   cumulative.
 2. Compare `ROADMAP` with the tagged README's unchecked feature tracker, preserving
    priority order. Check release notes when the tracker lags. Remove only the
    shipped part of an item: animated GIFs shipped in beta.3, while audio/video

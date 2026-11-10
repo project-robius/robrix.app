@@ -278,6 +278,54 @@ export const SIGNATURE: Feature[] = [
   },
 ];
 
+/**
+ * "Highlights from this release" on the download page. Summarised from the
+ * highlights on the pinned release's notes page (LINKS.latestRelease), and
+ * replaced wholesale each time release.json moves to a new tag.
+ */
+export const HIGHLIGHTS: Feature[] = [
+  {
+    title: 'Find and add people',
+    body: 'Search for people by name or user ID to start a direct message. Room and space search now covers public directories too, which you can adjust in Settings.',
+    icon: 'tabler:user-plus',
+  },
+  {
+    title: 'Room Info pane',
+    body: "A new pane shows a room's details and options.",
+    icon: 'tabler:info-circle',
+  },
+  {
+    title: 'Clearer sync status',
+    body: 'The sync indicator shows when Robrix is catching up, and when it last synced.',
+    icon: 'tabler:refresh',
+  },
+  {
+    title: 'Themes reach the system UI',
+    body: 'Light and dark themes now apply to window title bars, soft keyboards and menus as well.',
+    icon: 'tabler:palette',
+  },
+  {
+    title: 'Faster, lighter on Android',
+    body: 'Smooth 120 Hz refresh rates, with no battery wasted while the app is idle.',
+    icon: 'tabler:bolt',
+  },
+  {
+    title: '32-bit Android',
+    body: 'A new armv7 APK supports older 32-bit devices, and sharing files now works on Android 8 and 9.',
+    icon: 'tabler:device-mobile',
+  },
+  {
+    title: 'Everyday polish',
+    body: 'The selected tab is much clearer, the Home tab can be closed, and opening a room focuses the message box. Click-and-drag scrolling can now be turned off.',
+    icon: 'tabler:sparkles',
+  },
+  {
+    title: 'Fixes',
+    body: 'Line breaks are always kept, SVG images respect the thumbnail height and open full screen, Linux uses less CPU when idle, and the AppImage works on Wayland.',
+    icon: 'tabler:tool',
+  },
+];
+
 export const FEATURES: Feature[] = [
   {
     title: 'Light and dark themes',
