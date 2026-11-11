@@ -287,44 +287,44 @@ export const SIGNATURE: Feature[] = [
  */
 export const HIGHLIGHTS: Feature[] = [
   {
-    title: 'Find and add people',
-    body: 'Search for people by name or user ID to start a direct message. Room and space search now covers public directories too, which you can adjust in Settings.',
-    icon: 'tabler:user-plus',
+    title: 'Moderation tools',
+    body: 'Report, mute, kick or ban users, and find and delete the messages one person sent, such as spam.',
+    icon: 'tabler:shield-check',
   },
   {
-    title: 'Room Info pane',
-    body: "A new pane shows a room's details and options.",
-    icon: 'tabler:info-circle',
+    title: 'Emoji and reactions',
+    body: 'A searchable emoji picker with skin tones and recents. Double-tap a message to react, or type a colon to search as you write. Custom emoji now show in messages and reactions.',
+    icon: 'tabler:mood-smile',
   },
   {
-    title: 'Clearer sync status',
-    body: 'The sync indicator shows when Robrix is catching up, and when it last synced.',
-    icon: 'tabler:refresh',
+    title: 'Rooms list filter bubbles',
+    body: 'Filter bubbles replace fixed categories. Long-press, middle-click or right-click one to exclude it, for views like everything but low priority.',
+    icon: 'tabler:filter',
   },
   {
-    title: 'Themes reach the system UI',
-    body: 'Light and dark themes now apply to window title bars, soft keyboards and menus as well.',
-    icon: 'tabler:palette',
+    title: 'Create rooms, leave spaces',
+    body: "Create a room from the Add Room screen. Leave a space from a tree of your joined rooms and subspaces, and see who's in it. Replaced rooms can still be opened.",
+    icon: 'tabler:message-plus',
   },
   {
-    title: 'Faster, lighter on Android',
-    body: 'Smooth 120 Hz refresh rates, with no battery wasted while the app is idle.',
+    title: 'Link previews that fit',
+    body: 'A new layout for link previews that works better for images, GIFs and narrow screens.',
+    icon: 'tabler:link',
+  },
+  {
+    title: 'A soft keyboard that stays put',
+    body: 'On mobile the keyboard stays open while you scroll, send or pick emoji. Top and bottom bars hide as you scroll, and the bottom bar floats as a pill.',
+    icon: 'tabler:keyboard',
+  },
+  {
+    title: 'Verified users',
+    body: "Verify other people from their profile. Badges on avatars show who you've verified.",
+    icon: 'tabler:rosette-discount-check',
+  },
+  {
+    title: 'Faster on older Android',
+    body: 'Older devices draw text much faster and launch faster, and on Android 8 to 10 the soft keyboard no longer covers the message box.',
     icon: 'tabler:bolt',
-  },
-  {
-    title: '32-bit Android',
-    body: 'A new armv7 APK supports older 32-bit devices, and sharing files now works on Android 8 and 9.',
-    icon: 'tabler:device-mobile',
-  },
-  {
-    title: 'Everyday polish',
-    body: 'The selected tab is much clearer, the Home tab can be closed, and opening a room focuses the message box. Click-and-drag scrolling can now be turned off.',
-    icon: 'tabler:sparkles',
-  },
-  {
-    title: 'Fixes',
-    body: 'Line breaks are always kept, SVG images respect the thumbnail height and open full screen, Linux uses less CPU when idle, and the AppImage works on Wayland.',
-    icon: 'tabler:tool',
   },
 ];
 
@@ -396,7 +396,7 @@ export const FEATURES: Feature[] = [
   },
   {
     title: 'Slash commands',
-    body: '/me, /notice, /spoiler, /shrug, /rainbow, /invite, /dm, /whois, /ignore, /nick and /leave, sharing the autocomplete pop-up that mentions use.',
+    body: '/me, /notice, /spoiler, /shrug, /rainbow, /invite, /dm, /whois, /ignore, /nick, /leave, /kick, /ban and /unban, sharing the autocomplete pop-up that mentions use.',
     icon: 'tabler:terminal-2',
   },
   {
@@ -466,7 +466,6 @@ export const ROADMAP: RoadmapItem[] = [
   { label: 'Search messages within a room', issue: 122 },
   { label: 'Room browser and public room search' },
   { label: 'Room settings and info screen' },
-  { label: 'Moderation: ban, kick and friends' },
 ];
 
 export const STACK = [
