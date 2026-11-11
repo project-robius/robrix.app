@@ -283,18 +283,30 @@ export const SIGNATURE: Feature[] = [
 /**
  * "Highlights from this release" on the download page. Summarised from the
  * highlights on the pinned release's notes page, and
- * replaced wholesale each time release.json moves to a new tag.
+ * replaced wholesale each time release.json moves to a new tag. Keep the count a
+ * multiple of 4: the download page lays them out four across (two on medium
+ * screens), and a short last row would leave empty cells.
  */
 export const HIGHLIGHTS: Feature[] = [
   {
     title: 'Moderation tools',
-    body: 'Report, mute, kick or ban users, and find and delete the messages one person sent, such as spam.',
+    body: 'Report, mute, kick or ban users. Find, select and delete the messages one person sent, such as spam.',
     icon: 'tabler:shield-check',
   },
   {
-    title: 'Emoji and reactions',
-    body: 'A searchable emoji picker with skin tones and recents. Double-tap a message to react, or type a colon to search as you write. Custom emoji now show in messages and reactions.',
+    title: 'Emoji picker',
+    body: 'A searchable picker with skin tones and recents. Type a colon while writing to search and insert emoji instantly.',
     icon: 'tabler:mood-smile',
+  },
+  {
+    title: 'Quick reactions',
+    body: 'Double-tap or double-click a message to react, or pick an emoji from the message menu.',
+    icon: 'tabler:thumb-up',
+  },
+  {
+    title: 'Custom emoji',
+    body: 'Custom emoji and any MXC image now show up in messages and reactions.',
+    icon: 'tabler:sticker-2',
   },
   {
     title: 'Rooms list filter bubbles',
@@ -302,9 +314,19 @@ export const HIGHLIGHTS: Feature[] = [
     icon: 'tabler:filter',
   },
   {
-    title: 'Create rooms, leave spaces',
-    body: "Create a room from the Add Room screen. Leave a space from a tree of your joined rooms and subspaces, and see who's in it. Replaced rooms can still be opened.",
+    title: 'Create rooms',
+    body: 'Create a new room straight from the Add Room screen.',
     icon: 'tabler:message-plus',
+  },
+  {
+    title: 'Leave spaces',
+    body: 'Leave a space from a tree of your joined rooms and subspaces, and see who is in it.',
+    icon: 'tabler:door-exit',
+  },
+  {
+    title: 'Open replaced rooms',
+    body: 'Old rooms that were replaced by a newer one can be opened again.',
+    icon: 'tabler:history',
   },
   {
     title: 'Link previews that fit',
@@ -313,13 +335,33 @@ export const HIGHLIGHTS: Feature[] = [
   },
   {
     title: 'A soft keyboard that stays put',
-    body: 'On mobile the keyboard stays open while you scroll, send or pick emoji. Top and bottom bars hide as you scroll, and the bottom bar floats as a pill.',
+    body: 'On mobile the keyboard stays open while you scroll, send messages or pick emoji.',
     icon: 'tabler:keyboard',
   },
   {
+    title: 'Bars that get out of the way',
+    body: 'Top and bottom bars hide as you scroll, and the bottom bar floats as a pill.',
+    icon: 'tabler:layout-bottombar',
+  },
+  {
+    title: 'Sync you can see',
+    body: 'An animated bar shows when your account is syncing, and the rooms list has a more detailed sync icon.',
+    icon: 'tabler:refresh',
+  },
+  {
     title: 'Verified users',
-    body: "Verify other people from their profile. Badges on avatars show who you've verified.",
+    body: 'Verify other people from their profile. Badges on avatars show who you have verified.',
     icon: 'tabler:rosette-discount-check',
+  },
+  {
+    title: 'A roomier message box',
+    body: 'The redesigned input box has more room for text and easier access to uploading media.',
+    icon: 'tabler:edit',
+  },
+  {
+    title: 'Instant space switching',
+    body: 'Space child graphs are cached, so switching between spaces is instant after the first time.',
+    icon: 'tabler:rocket',
   },
   {
     title: 'Faster on older Android',
