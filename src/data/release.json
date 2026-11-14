@@ -1,87 +1,87 @@
 {
-  "tag": "v1.0.0-beta.6",
-  "publishedAt": "2026-11-11T01:42:41Z",
-  "url": "https://github.com/project-robius/robrix/releases/tag/v1.0.0-beta.6",
+  "tag": "v1.0.0-beta.7",
+  "publishedAt": "2026-11-14T08:18:54Z",
+  "url": "https://github.com/project-robius/robrix/releases/tag/v1.0.0-beta.7",
   "assets": [
     {
-      "name": "Robrix-1.0.0-beta.6-android-aarch64.apk",
-      "size": 65874430,
-      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.6/Robrix-1.0.0-beta.6-android-aarch64.apk"
+      "name": "Robrix-1.0.0-beta.7-android-aarch64.apk",
+      "size": 66116094,
+      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.7/Robrix-1.0.0-beta.7-android-aarch64.apk"
     },
     {
-      "name": "Robrix-1.0.0-beta.6-android-armv7.apk",
-      "size": 64158208,
-      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.6/Robrix-1.0.0-beta.6-android-armv7.apk"
+      "name": "Robrix-1.0.0-beta.7-android-armv7.apk",
+      "size": 64264704,
+      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.7/Robrix-1.0.0-beta.7-android-armv7.apk"
     },
     {
-      "name": "Robrix_1.0.0-beta.6_aarch64.dmg",
-      "size": 76208691,
-      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.6/Robrix_1.0.0-beta.6_aarch64.dmg"
+      "name": "Robrix_1.0.0-beta.7_aarch64.dmg",
+      "size": 76240214,
+      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.7/Robrix_1.0.0-beta.7_aarch64.dmg"
     },
     {
-      "name": "Robrix_1.0.0-beta.6_x64.dmg",
-      "size": 79587157,
-      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.6/Robrix_1.0.0-beta.6_x64.dmg"
+      "name": "Robrix_1.0.0-beta.7_x64.dmg",
+      "size": 79680475,
+      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.7/Robrix_1.0.0-beta.7_x64.dmg"
     },
     {
-      "name": "robrix-1.0.0-beta.6-aarch64.AppImage",
-      "size": 75471368,
-      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.6/robrix-1.0.0-beta.6-aarch64.AppImage"
+      "name": "robrix-1.0.0-beta.7-aarch64.AppImage",
+      "size": 75799048,
+      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.7/robrix-1.0.0-beta.7-aarch64.AppImage"
     },
     {
-      "name": "robrix-1.0.0-beta.6-ios-aarch64.ipa",
-      "size": 65215535,
-      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.6/robrix-1.0.0-beta.6-ios-aarch64.ipa"
+      "name": "robrix-1.0.0-beta.7-ios-aarch64.ipa",
+      "size": 65428219,
+      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.7/robrix-1.0.0-beta.7-ios-aarch64.ipa"
     },
     {
-      "name": "robrix-1.0.0-beta.6-ubuntu-22.04-arm-aarch64.deb",
-      "size": 75679082,
-      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.6/robrix-1.0.0-beta.6-ubuntu-22.04-arm-aarch64.deb"
+      "name": "robrix-1.0.0-beta.7-ubuntu-22.04-arm-aarch64.deb",
+      "size": 76078554,
+      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.7/robrix-1.0.0-beta.7-ubuntu-22.04-arm-aarch64.deb"
     },
     {
-      "name": "robrix-1.0.0-beta.6-ubuntu-22.04-x86_64.deb",
-      "size": 78178226,
-      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.6/robrix-1.0.0-beta.6-ubuntu-22.04-x86_64.deb"
+      "name": "robrix-1.0.0-beta.7-ubuntu-22.04-x86_64.deb",
+      "size": 78697342,
+      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.7/robrix-1.0.0-beta.7-ubuntu-22.04-x86_64.deb"
     },
     {
-      "name": "robrix-1.0.0-beta.6-ubuntu-24.04-arm-aarch64.deb",
-      "size": 75682230,
-      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.6/robrix-1.0.0-beta.6-ubuntu-24.04-arm-aarch64.deb"
+      "name": "robrix-1.0.0-beta.7-ubuntu-24.04-arm-aarch64.deb",
+      "size": 76084998,
+      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.7/robrix-1.0.0-beta.7-ubuntu-24.04-arm-aarch64.deb"
     },
     {
-      "name": "robrix-1.0.0-beta.6-ubuntu-24.04-x86_64.deb",
-      "size": 78189414,
-      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.6/robrix-1.0.0-beta.6-ubuntu-24.04-x86_64.deb"
+      "name": "robrix-1.0.0-beta.7-ubuntu-24.04-x86_64.deb",
+      "size": 78718650,
+      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.7/robrix-1.0.0-beta.7-ubuntu-24.04-x86_64.deb"
     },
     {
-      "name": "robrix-1.0.0-beta.6-windows-x86_64.exe",
-      "size": 58046888,
-      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.6/robrix-1.0.0-beta.6-windows-x86_64.exe"
+      "name": "robrix-1.0.0-beta.7-windows-x86_64.exe",
+      "size": 58189636,
+      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.7/robrix-1.0.0-beta.7-windows-x86_64.exe"
     },
     {
-      "name": "robrix-1.0.0-beta.6-x86_64.AppImage",
-      "size": 77904376,
-      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.6/robrix-1.0.0-beta.6-x86_64.AppImage"
+      "name": "robrix-1.0.0-beta.7-x86_64.AppImage",
+      "size": 78330360,
+      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.7/robrix-1.0.0-beta.7-x86_64.AppImage"
     },
     {
-      "name": "robrix-1.0.0beta.6-1-aarch64.pkg.tar.zst",
-      "size": 72172039,
-      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.6/robrix-1.0.0beta.6-1-aarch64.pkg.tar.zst"
+      "name": "robrix-1.0.0beta.7-1-aarch64.pkg.tar.zst",
+      "size": 72332514,
+      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.7/robrix-1.0.0beta.7-1-aarch64.pkg.tar.zst"
     },
     {
-      "name": "robrix-1.0.0beta.6-1-x86_64.pkg.tar.zst",
-      "size": 74040047,
-      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.6/robrix-1.0.0beta.6-1-x86_64.pkg.tar.zst"
+      "name": "robrix-1.0.0beta.7-1-x86_64.pkg.tar.zst",
+      "size": 74444126,
+      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.7/robrix-1.0.0beta.7-1-x86_64.pkg.tar.zst"
     },
     {
-      "name": "robrix_1.0.0-beta.6_aarch64.tar.gz",
-      "size": 75673978,
-      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.6/robrix_1.0.0-beta.6_aarch64.tar.gz"
+      "name": "robrix_1.0.0-beta.7_aarch64.tar.gz",
+      "size": 76073443,
+      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.7/robrix_1.0.0-beta.7_aarch64.tar.gz"
     },
     {
-      "name": "robrix_1.0.0-beta.6_x86_64.tar.gz",
-      "size": 78173273,
-      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.6/robrix_1.0.0-beta.6_x86_64.tar.gz"
+      "name": "robrix_1.0.0-beta.7_x86_64.tar.gz",
+      "size": 78692482,
+      "url": "https://github.com/project-robius/robrix/releases/download/v1.0.0-beta.7/robrix_1.0.0-beta.7_x86_64.tar.gz"
     }
   ]
 }
