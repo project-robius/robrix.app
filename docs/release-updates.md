@@ -82,9 +82,9 @@ complete filename/size inventory; avoid checking each large binary individually.
    a version label. The preview-card artwork is version-neutral; regenerate it
    only when artwork or its text changes.
 
-App features and website features are separate. For example, beta.4 adds manual
-light/dark switching in the app, while automatic system-theme switching is still
-planned. The website's existing System theme option does not imply the app has it.
+App features and website features are separate. For example, beta.4 added manual
+light/dark switching in the app and beta.7 added the "Auto" (follow system) option.
+The website's own System theme option is a separate feature.
 Keep old release tags in historical records, migration notes, and test fixtures;
 update current metadata and runnable documentation examples.
 

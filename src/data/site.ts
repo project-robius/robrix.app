@@ -289,91 +289,51 @@ export const SIGNATURE: Feature[] = [
  */
 export const HIGHLIGHTS: Feature[] = [
   {
-    title: 'Moderation tools',
-    body: 'Report, mute, kick or ban users. Find, select and delete the messages one person sent, such as spam.',
-    icon: 'tabler:shield-check',
+    title: 'Auto appearance',
+    body: 'A new "Auto" setting follows your system\'s light or dark mode, and it is now the default.',
+    icon: 'tabler:moon',
   },
   {
-    title: 'Emoji picker',
-    body: 'A searchable picker with skin tones and recents. Type a colon while writing to search and insert emoji instantly.',
-    icon: 'tabler:mood-smile',
-  },
-  {
-    title: 'Quick reactions',
-    body: 'Double-tap or double-click a message to react, or pick an emoji from the message menu.',
-    icon: 'tabler:thumb-up',
-  },
-  {
-    title: 'Custom emoji',
-    body: 'Custom emoji and any MXC image now show up in messages and reactions.',
-    icon: 'tabler:sticker-2',
-  },
-  {
-    title: 'Rooms list filter bubbles',
-    body: 'Filter bubbles replace fixed categories. Long-press, middle-click or right-click one to exclude it, for views like everything but low priority.',
-    icon: 'tabler:filter',
-  },
-  {
-    title: 'Create rooms',
-    body: 'Create a new room straight from the Add Room screen.',
-    icon: 'tabler:message-plus',
-  },
-  {
-    title: 'Leave spaces',
-    body: 'Leave a space from a tree of your joined rooms and subspaces, and see who is in it.',
+    title: 'Rooms you left, clearly marked',
+    body: 'If you are kicked, banned or leave a room while it is open, Robrix shows why, with buttons to re-join or knock when allowed. You can still read it.',
     icon: 'tabler:door-exit',
   },
   {
-    title: 'Open replaced rooms',
-    body: 'Old rooms that were replaced by a newer one can be opened again.',
-    icon: 'tabler:history',
+    title: 'Invites that explain themselves',
+    body: 'Invites rejected in another app or taken back by the sender now say so, instead of loading forever.',
+    icon: 'tabler:mail-opened',
   },
   {
-    title: 'Link previews that fit',
-    body: 'A new layout for link previews that works better for images, GIFs and narrow screens.',
-    icon: 'tabler:link',
-  },
-  {
-    title: 'A soft keyboard that stays put',
-    body: 'On mobile the keyboard stays open while you scroll, send messages or pick emoji.',
-    icon: 'tabler:keyboard',
-  },
-  {
-    title: 'Bars that get out of the way',
-    body: 'Top and bottom bars hide as you scroll, and the bottom bar floats as a pill.',
-    icon: 'tabler:layout-bottombar',
-  },
-  {
-    title: 'Sync you can see',
-    body: 'An animated bar shows when your account is syncing, and the rooms list has a more detailed sync icon.',
-    icon: 'tabler:refresh',
-  },
-  {
-    title: 'Verified users',
-    body: 'Verify other people from their profile. Badges on avatars show who you have verified.',
-    icon: 'tabler:rosette-discount-check',
-  },
-  {
-    title: 'A roomier message box',
-    body: 'The redesigned input box has more room for text and easier access to uploading media.',
+    title: 'Failed edits keep your draft',
+    body: 'If an edit fails to send, your changed text is put back in the editor so you can retry it.',
     icon: 'tabler:edit',
   },
   {
-    title: 'Instant space switching',
-    body: 'Space child graphs are cached, so switching between spaces is instant after the first time.',
-    icon: 'tabler:rocket',
+    title: 'Only what you can do',
+    body: 'In rooms where you cannot send messages, Reply, Edit and reactions are hidden, and trying to react says why it is not allowed.',
+    icon: 'tabler:lock',
   },
   {
-    title: 'Faster on older Android',
-    body: 'Older devices draw text much faster and launch faster, and on Android 8 to 10 the soft keyboard no longer covers the message box.',
-    icon: 'tabler:bolt',
+    title: 'Unnamed rooms get an alias',
+    body: 'Rooms and spaces with no name show their alias instead of a bare room ID.',
+    icon: 'tabler:hash',
+  },
+  {
+    title: 'A rooms list that never goes empty',
+    body: 'The rooms list no longer shows as empty when the Matrix sync service resets unexpectedly.',
+    icon: 'tabler:list-details',
+  },
+  {
+    title: 'Long messages stay in bounds',
+    body: 'A very long message can no longer push the bottom of the text input off the screen.',
+    icon: 'tabler:text-wrap',
   },
 ];
 
 export const FEATURES: Feature[] = [
   {
     title: 'Light and dark themes',
-    body: 'Choose light or dark mode in Settings → Appearance. The theme changes instantly without restarting Robrix, and your choice is remembered the next time you open the app.',
+    body: 'Choose light, dark or Auto in Settings → Appearance. Auto follows your system, the theme changes instantly without restarting Robrix, and your choice is remembered the next time you open the app.',
     icon: 'tabler:moon',
   },
   {
